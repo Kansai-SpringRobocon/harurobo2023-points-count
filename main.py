@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.font as tk_font
 from PIL import ImageTk
+import json
 
 
 class Application(tk.Frame):
@@ -11,13 +12,18 @@ class Application(tk.Frame):
     state_blue_toy_acquisition = False
     state_red_hat_byshelves_1 = False
     state_red_sword_byshelves_1 = False
+#    shelves = {"back_yard", "sales_floor", "showcase"}
+#    shelves["back_yard"] = {}
+    d = {}
+    with open("setting.json", mode="r") as f:
+        d = json.load(f)
 
     def __init__(self):
         self.master = tk.Tk()
 
         self.master.title("画像の表示")       # ウィンドウタイトル
-        self.master.geometry("720x520")     # ウィンドウサイズ(幅x高さ)
-        self.master.attributes('-fullscreen', True)
+        self.master.geometry("1920x1080")     # ウィンドウサイズ(幅x高さ)
+        #self.master.attributes('-fullscreen', True)
 
         # Canvasの作成
         self.canvas = tk.Canvas(self.master)
@@ -178,6 +184,7 @@ class Application(tk.Frame):
         self.red_points = 0
         self.blue_points = 0
         self.update_points()
+        print(self.d)
 
 
 if __name__ == "__main__":
