@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.font as tk_font
+from tkinter import ttk
 from PIL import ImageTk
 import json
 
@@ -10,15 +11,17 @@ class Application(tk.Frame):
 
     state_red_toy_acquisition = False
     state_blue_toy_acquisition = False
-    state_red_sword_byshelves_1 = False
-#    shelves = {"back_yard", "sales_floor", "showcase"}
-#    shelves["back_yard"] = {}
+
+    team_list = {}
+    with open("team.json", mode="r", encoding="utf-8") as team_list_file:
+        team_list = json.load(team_list_file)
+
     position_state_red = {}
     position_state_blue = {}
-    with open("setting_red.json", mode="r") as f_red:
-        position_state_red = json.load(f_red)
-    with open("setting_red.json", mode="r") as f_blue:
-        position_state_blue = json.load(f_blue)
+    with open("area_state.json", mode="r", encoding="utf-8") as area_state:
+        position_state_red = json.load(area_state)
+    with open("area_state.json", mode="r", encoding="utf-8") as area_state:
+        position_state_blue = json.load(area_state)
 
     def __init__(self):
         self.master = tk.Tk()
@@ -46,6 +49,19 @@ class Application(tk.Frame):
             canvas_height * 0.6,
             image=self.photo_image,  # 表示画像データ
         )
+
+        combobox_font = tk_font.Font(self.master, family="HGPゴシックE",
+                                     size=18, weight="bold")
+        self.master.option_add("*TCombobox*Listbox.Font", combobox_font)
+        red_team_val = tk.StringVar()
+        blue_team_val = tk.StringVar()
+        red_team = tk.ttk.Combobox(
+            self.master, textvariable=red_team_val, value=self.team_list["team_name"], font=combobox_font, width=20)
+        blue_team = tk.ttk.Combobox(
+            self.master, textvariable=blue_team_val, value=self.team_list["team_name"], font=combobox_font, width=20)
+        # red_team.bind('<<ComboboxSelected>>', select_combo)
+        red_team.place(x=100, y=100)
+        blue_team.place(x=100, y=150)
 
         points_width = canvas_width/4
         points_height = canvas_height/6
@@ -106,16 +122,87 @@ class Application(tk.Frame):
         self.btn_blue_toy_acquisition.place(
             x=canvas_width/2+btn_toy_acquisition_pos, y=canvas_height*0.68, anchor=tk.CENTER)
 
-        btn_byshelves_0_pos = 40
-        self.btn_red_byshelves_hat_0 = tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_byshelves_hat_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font)
-        self.btn_red_byshelves_hat_0.place(
-            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.9, anchor=tk.CENTER)
+        self.btn_red_byshelves_hat = []
+        self.btn_red_byshelves_sword = []
 
-        self.btn_red_byshelves_sword_0 = tk.Button(
-            self.master, text='剣', command=self.btn_red_sword_byshelves_1_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
-        self.btn_red_byshelves_sword_0.place(
-            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.95, anchor=tk.CENTER)
+        self.btn_red_sashelves_hat = []
+        self.btn_red_sashelves_sword = []
+
+        self.btn_red_shshelves_hat = []
+        self.btn_red_shshelves_sword = []
+
+        btn_byshelves_0_pos = 70
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat[0].place(
+            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.87, anchor=tk.CENTER)
+
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword[0].place(
+            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.945, anchor=tk.CENTER)
+
+        btn_byshelves_1_pos = 400
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat[1].place(
+            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.735, anchor=tk.CENTER)
+
+        btn_byshelves_2_pos = 300
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword[1].place(
+            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.735, anchor=tk.CENTER)
+
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat[2].place(
+            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.65, anchor=tk.CENTER)
+
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword[2].place(
+            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.65, anchor=tk.CENTER)
+
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat[3].place(
+            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.565, anchor=tk.CENTER)
+
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword[3].place(
+            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.565, anchor=tk.CENTER)
+
+        btn_sashelves_0_pos = 350
+        self.btn_red_sashelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_hat[0].place(
+            x=canvas_width/2-btn_sashelves_0_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+
+        btn_sashelves_1_pos = 260
+        self.btn_red_sashelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_sword[0].place(
+            x=canvas_width/2-btn_sashelves_1_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+
+        btn_sashelves_2_pos = 170
+        self.btn_red_sashelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_hat[1].place(
+            x=canvas_width/2-btn_sashelves_2_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+
+        btn_sashelves_3_pos = 60
+        self.btn_red_sashelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_sword[1].place(
+            x=canvas_width/2-btn_sashelves_3_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+
+        btn_shshelves_0_pos = 400
+        self.btn_red_shshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_shshelves_hat[0].place(
+            x=canvas_width/2-btn_shshelves_0_pos, y=canvas_height*0.31, anchor=tk.CENTER)
 
 
 #  print(len(self.btn_red_hat_byshelves))
@@ -155,29 +242,89 @@ class Application(tk.Frame):
             self.btn_blue_toy_acquisition['bg'] = "#FFFFFF"
             self.state_blue_toy_acquisition = False
 
-    def btn_red_byshelves_hat_act(self, type, id):
+    def btn_red_byshelves_act(self, type, id):
         if self.position_state_red["back_yard"]["shelves"][type][id] == False:
-            self.red_points = self.red_points+10
+            if type == "hat":
+                self.btn_red_byshelves_hat[id]['bg'] = "#00FF00"
+                if self.position_state_red["back_yard"]["shelves"]["sword"][id] == False:
+                    self.red_points = self.red_points+10
+                else:
+                    self.red_points = self.red_points+5
+            else:
+                self.btn_red_byshelves_sword[id]['bg'] = "#00FF00"
+                if self.position_state_red["back_yard"]["shelves"]["hat"][id] == False:
+                    self.red_points = self.red_points+5
             self.update_points()
-            self.btn_red_byshelves_hat_0['bg'] = "#00FF00"
             self.position_state_red["back_yard"]["shelves"][type][id] = True
         else:
-            self.red_points = self.red_points-10
+            if type == "hat":
+                self.btn_red_byshelves_hat[id]['bg'] = "#FFFFFF"
+                if self.position_state_red["back_yard"]["shelves"]["sword"][id] == False:
+                    self.red_points = self.red_points-10
+                else:
+                    self.red_points = self.red_points-5
+            else:
+                self.btn_red_byshelves_sword[id]['bg'] = "#FFFFFF"
+                if self.position_state_red["back_yard"]["shelves"]["hat"][id] == False:
+                    self.red_points = self.red_points-5
             self.update_points()
-            self.btn_red_byshelves_hat_0['bg'] = "#FFFFFF"
             self.position_state_red["back_yard"]["shelves"][type][id] = False
 
-    def btn_red_sword_byshelves_1_act(self):
-        if self.state_red_sword_byshelves_1 == False:
-            self.red_points = self.red_points+10
+    def btn_red_sashelves_act(self, type, id):
+        if self.position_state_red["sales_floor"]["shelves"][type][id] == False:
+            if type == "hat":
+                self.btn_red_sashelves_hat[id]['bg'] = "#00FF00"
+                if self.position_state_red["sales_floor"]["shelves"]["sword"][id] == False:
+                    self.red_points = self.red_points+20
+                else:
+                    self.red_points = self.red_points+5
+            else:
+                self.btn_red_sashelves_sword[id]['bg'] = "#00FF00"
+                if self.position_state_red["sales_floor"]["shelves"]["hat"][id] == False:
+                    self.red_points = self.red_points+15
             self.update_points()
-            self.btn_red_sword_byshelves_1['bg'] = "#00FF00"
-            self.state_red_sword_byshelves_1 = True
+            self.position_state_red["sales_floor"]["shelves"][type][id] = True
         else:
-            self.red_points = self.red_points-10
+            if type == "hat":
+                self.btn_red_sashelves_hat[id]['bg'] = "#FFFFFF"
+                if self.position_state_red["sales_floor"]["shelves"]["sword"][id] == False:
+                    self.red_points = self.red_points-20
+                else:
+                    self.red_points = self.red_points-5
+            else:
+                self.btn_red_sashelves_sword[id]['bg'] = "#FFFFFF"
+                if self.position_state_red["sales_floor"]["shelves"]["hat"][id] == False:
+                    self.red_points = self.red_points-15
             self.update_points()
-            self.btn_red_sword_byshelves_1['bg'] = "#FFFFFF"
-            self.state_red_sword_byshelves_1 = False
+            self.position_state_red["sales_floor"]["shelves"][type][id] = False
+
+    def btn_red_shshelves_act(self, type, id):
+        if self.position_state_red["showcase"]["shelves"][type][id] == False:
+            if type == "hat":
+                self.btn_red_shshelves_hat[id]['bg'] = "#00FF00"
+                if self.position_state_red["showcase"]["shelves"]["sword"][id] == False:
+                    self.red_points = self.red_points+35
+                else:
+                    self.red_points = self.red_points+5
+            else:
+                self.btn_red_shshelves_sword[id]['bg'] = "#00FF00"
+                if self.position_state_red["showcase"]["shelves"]["hat"][id] == False:
+                    self.red_points = self.red_points+25
+            self.update_points()
+            self.position_state_red["showcase"]["shelves"][type][id] = True
+        else:
+            if type == "hat":
+                self.btn_red_shshelves_hat[id]['bg'] = "#FFFFFF"
+                if self.position_state_red["showcase"]["shelves"]["sword"][id] == False:
+                    self.red_points = self.red_points-30
+                else:
+                    self.red_points = self.red_points-5
+            else:
+                self.btn_red_shshelves_sword[id]['bg'] = "#FFFFFF"
+                if self.position_state_red["showcase"]["shelves"]["hat"][id] == False:
+                    self.red_points = self.red_points-25
+            self.update_points()
+            self.position_state_red["showcase"]["shelves"][type][id] = False
 
     def btn_test(self):
         self.red_points = self.red_points+1
