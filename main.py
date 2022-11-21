@@ -10,20 +10,22 @@ class Application(tk.Frame):
 
     state_red_toy_acquisition = False
     state_blue_toy_acquisition = False
-    state_red_hat_byshelves_1 = False
     state_red_sword_byshelves_1 = False
 #    shelves = {"back_yard", "sales_floor", "showcase"}
 #    shelves["back_yard"] = {}
-    d = {}
-    with open("setting.json", mode="r") as f:
-        d = json.load(f)
+    position_state_red = {}
+    position_state_blue = {}
+    with open("setting_red.json", mode="r") as f_red:
+        position_state_red = json.load(f_red)
+    with open("setting_red.json", mode="r") as f_blue:
+        position_state_blue = json.load(f_blue)
 
     def __init__(self):
         self.master = tk.Tk()
 
         self.master.title("画像の表示")       # ウィンドウタイトル
         self.master.geometry("1920x1080")     # ウィンドウサイズ(幅x高さ)
-        #self.master.attributes('-fullscreen', True)
+        self.master.attributes('-fullscreen', True)
 
         # Canvasの作成
         self.canvas = tk.Canvas(self.master)
@@ -104,17 +106,19 @@ class Application(tk.Frame):
         self.btn_blue_toy_acquisition.place(
             x=canvas_width/2+btn_toy_acquisition_pos, y=canvas_height*0.68, anchor=tk.CENTER)
 
-        btn_byshelves_1_pos = 40
-        self.btn_red_hat_byshelves_1 = tk.Button(
-            self.master, text='ハット', command=self.btn_red_hat_byshelves_1_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
-        self.btn_red_hat_byshelves_1.place(
-            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.9, anchor=tk.CENTER)
+        btn_byshelves_0_pos = 40
+        self.btn_red_byshelves_hat_0 = tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_hat_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font)
+        self.btn_red_byshelves_hat_0.place(
+            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.9, anchor=tk.CENTER)
 
-        btn_byshelves_1_pos = 40
-        self.btn_red_sword_byshelves_1 = tk.Button(
+        self.btn_red_byshelves_sword_0 = tk.Button(
             self.master, text='剣', command=self.btn_red_sword_byshelves_1_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
-        self.btn_red_sword_byshelves_1.place(
-            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.95, anchor=tk.CENTER)
+        self.btn_red_byshelves_sword_0.place(
+            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.95, anchor=tk.CENTER)
+
+
+#  print(len(self.btn_red_hat_byshelves))
 
         self.master.mainloop()
 
@@ -151,17 +155,17 @@ class Application(tk.Frame):
             self.btn_blue_toy_acquisition['bg'] = "#FFFFFF"
             self.state_blue_toy_acquisition = False
 
-    def btn_red_hat_byshelves_1_act(self):
-        if self.state_red_hat_byshelves_1 == False:
+    def btn_red_byshelves_hat_act(self, type, id):
+        if self.position_state_red["back_yard"]["shelves"][type][id] == False:
             self.red_points = self.red_points+10
             self.update_points()
-            self.btn_red_hat_byshelves_1['bg'] = "#00FF00"
-            self.state_red_hat_byshelves_1 = True
+            self.btn_red_byshelves_hat_0['bg'] = "#00FF00"
+            self.position_state_red["back_yard"]["shelves"][type][id] = True
         else:
             self.red_points = self.red_points-10
             self.update_points()
-            self.btn_red_hat_byshelves_1['bg'] = "#FFFFFF"
-            self.state_red_hat_byshelves_1 = False
+            self.btn_red_byshelves_hat_0['bg'] = "#FFFFFF"
+            self.position_state_red["back_yard"]["shelves"][type][id] = False
 
     def btn_red_sword_byshelves_1_act(self):
         if self.state_red_sword_byshelves_1 == False:
@@ -183,8 +187,9 @@ class Application(tk.Frame):
     def btn_reset(self):
         self.red_points = 0
         self.blue_points = 0
+        for i in range(len(self.position_state_red["back_yard"]["shelves"]["hat"])):
+            self.position_state_red["back_yard"]["shelves"]["hat"][i] = False
         self.update_points()
-        print(self.d)
 
 
 if __name__ == "__main__":

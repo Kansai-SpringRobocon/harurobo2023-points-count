@@ -1,0 +1,38 @@
+{
+    "back_yard": {
+        "shelves": {
+            "hat": [
+                false,
+                false,
+                false,
+                false
+            ],
+            "sword": [
+                false,
+                false,
+                false,
+                false
+            ]
+        }
+    },
+    "sales_floor": {
+        "shelves_1": [
+            false,
+            false
+        ],
+        "shelves_2": [
+            false,
+            false
+        ]
+    },
+    "showcase": {
+        "shelves_1": [
+            false,
+            false
+        ],
+        "shelves_2": [
+            false,
+            false
+        ]
+    }
+}
