@@ -16,8 +16,8 @@ class Application(tk.Frame):
     state_red_toy_acquisition = False
     state_blue_toy_acquisition = False
 
-    red_team_name = "チーム名を選択してください"
-    blue_team_name = "チーム名を選択してください"
+    red_team_name = "チーム名を\n選択してください"
+    blue_team_name = "チーム名を\n選択してください"
 
     team_list = {}
     with open("team.json", mode="r", encoding="utf-8") as team_list_file:
@@ -34,8 +34,8 @@ class Application(tk.Frame):
         self.master = tk.Tk()
 
         self.master.title("春ロボコン2023 得点計算ツール")       # ウィンドウタイトル
-        self.master.geometry("1920x1080")     # ウィンドウサイズ(幅x高さ)
-        self.master.attributes('-fullscreen', True)
+        self.master.geometry("1792x1008")     # ウィンドウサイズ(幅x高さ)
+        #self.master.attributes('-fullscreen', True)
         self.master.iconbitmap(default='harurobo.ico')
 
         # Canvasの作成
@@ -77,15 +77,6 @@ class Application(tk.Frame):
         self.canvas.create_rectangle(
             canvas_width/2, 0, canvas_width/2+points_width, points_height, fill='blue')
 
-        red_label = tk.Label(self.master, text="赤コート",
-                             fg="#FFFFFF", bg="#FF0000", font=("HGPゴシックE", 30, "bold"))
-        blue_label = tk.Label(self.master, text="青コート",
-                              fg="#FFFFFF", bg="#0000FF", font=("HGPゴシックE", 30, "bold"))
-        red_label.place(x=int(canvas_width/2-points_width/2),
-                        y=40, anchor=tk.CENTER)
-        blue_label.place(x=int(canvas_width/2+points_width/2),
-                         y=40, anchor=tk.CENTER)
-
         self.red_points_text = tk.StringVar()
         self.red_points_text.set(str(self.red_points))
 
@@ -93,13 +84,13 @@ class Application(tk.Frame):
         self.blue_points_text.set(str(self.blue_points))
 
         red_points_label = tk.Label(self.master, textvariable=self.red_points_text,
-                                    fg="#FFFFFF", bg="#FF0000", font=("HGPゴシックE", 42, "bold"))
+                                    fg="#FFFFFF", bg="#FF0000", font=("HGPゴシックE", 36, "bold"))
         blue_points_label = tk.Label(self.master, textvariable=self.blue_points_text,
-                                     fg="#FFFFFF", bg="#0000FF", font=("HGPゴシックE", 42, "bold"))
+                                     fg="#FFFFFF", bg="#0000FF", font=("HGPゴシックE", 36, "bold"))
         red_points_label.place(x=int(canvas_width/2-points_width/2),
-                               y=100, anchor=tk.CENTER)
+                               y=120, anchor=tk.CENTER)
         blue_points_label.place(x=int(canvas_width/2+points_width/2),
-                                y=100, anchor=tk.CENTER)
+                                y=120, anchor=tk.CENTER)
 
         self.red_team_text = tk.StringVar()
         self.red_team_text.set(str(self.red_team_name))
@@ -107,13 +98,13 @@ class Application(tk.Frame):
         self.blue_team_text = tk.StringVar()
         self.blue_team_text.set(str(self.blue_team_name))
         red_team_name_label = tk.Label(self.master, textvariable=self.red_team_text,
-                                       fg="#FFFFFF", bg="#FF0000", font=("HGPゴシックE", 20, "bold"))
+                                       fg="#FFFFFF", bg="#FF0000", font=("HGPゴシックE", 26, "bold"))
         blue_team_name_label = tk.Label(self.master, textvariable=self.blue_team_text,
-                                        fg="#FFFFFF", bg="#0000FF", font=("HGPゴシックE", 20, "bold"))
+                                        fg="#FFFFFF", bg="#0000FF", font=("HGPゴシックE", 26, "bold"))
         red_team_name_label.place(x=int(canvas_width/2-points_width/2),
-                                  y=150, anchor=tk.CENTER)
+                                  y=50, anchor=tk.CENTER)
         blue_team_name_label.place(x=int(canvas_width/2+points_width/2),
-                                   y=150, anchor=tk.CENTER)
+                                   y=50, anchor=tk.CENTER)
 
         combobox_font = tk_font.Font(self.master, family="HGPゴシックE",
                                      size=18, weight="bold")
@@ -152,13 +143,7 @@ class Application(tk.Frame):
             canvas_height/1000), width=int(canvas_width/200), bg='#FF0000', fg='#FFFFFF', font=btn_close_font)
         btn_close.place(x=canvas_width*0.905, y=canvas_height*0.9)
 
-        btn_test = tk.Button(self.master, text='test', command=self.btn_test, height=int(
-            canvas_height/1000), width=int(canvas_width/148), font=btn_rst_font, relief=tk.RAISED, bd=5)
-        btn_test.place(x=canvas_width*0.905, y=canvas_height*0.5)
-
         self.setup_btns(canvas_width, canvas_height)
-
-#  print(len(self.btn_red_hat_byshelves))
 
         self.master.mainloop()
 
@@ -381,9 +366,9 @@ class Application(tk.Frame):
         self.red_points_text.set(str(self.red_points))
         self.blue_points_text.set(str(self.blue_points))
         if self.red_toy_counters >= 6:
-            print("陳列タイム終了")
+            self.writeToLog("赤チーム：陳列タイム　終了")
         if self.blue_toy_counters >= 6:
-            print("陳列タイム終了")
+            self.writeToLog("青チーム：陳列タイム　終了")
 
     def update_team_name(self, event):
         if self.red_team_text.get() != self.red_team.get():
@@ -474,13 +459,18 @@ class Application(tk.Frame):
                 if self.position_state_blue["back_yard"]["shelves"]["sword"][id] == False:
                     self.blue_points = self.blue_points+10
                     self.blue_toy_counters += 1
+                    self.writeToLog("青チーム：バックヤード\tハット　配置\t+10点")
                 else:
                     self.blue_points = self.blue_points+5
+                    self.writeToLog("青チーム：バックヤード\tハット　配置\t+5点")
             else:
                 self.btn_blue_byshelves_sword[id]['bg'] = "#00FF00"
                 if self.position_state_blue["back_yard"]["shelves"]["hat"][id] == False:
                     self.blue_points = self.blue_points+5
                     self.blue_toy_counters += 1
+                    self.writeToLog("青チーム：バックヤード\t剣　配置\t+5点")
+                else:
+                    self.writeToLog("青チーム：バックヤード\t剣　配置")
             self.update_points()
             self.position_state_blue["back_yard"]["shelves"][type][id] = True
         else:
@@ -489,13 +479,18 @@ class Application(tk.Frame):
                 if self.position_state_blue["back_yard"]["shelves"]["sword"][id] == False:
                     self.blue_points = self.blue_points-10
                     self.blue_toy_counters -= 1
+                    self.writeToLog("青チーム：バックヤード\tハット　配置取り消し\t-10点")
                 else:
                     self.blue_points = self.blue_points-5
+                    self.writeToLog("青チーム：バックヤード\tハット　配置取り消し\t-5点")
             else:
                 self.btn_blue_byshelves_sword[id]['bg'] = "#FFFFFF"
                 if self.position_state_blue["back_yard"]["shelves"]["hat"][id] == False:
                     self.blue_points = self.blue_points-5
                     self.blue_toy_counters -= 1
+                    self.writeToLog("青チーム：バックヤード\t剣　配置取り消し\t-5点")
+                else:
+                    self.writeToLog("青チーム：バックヤード\t剣　配置取り消し")
             self.update_points()
             self.position_state_blue["back_yard"]["shelves"][type][id] = False
 
@@ -548,13 +543,18 @@ class Application(tk.Frame):
                 if self.position_state_blue["sales_floor"]["shelves"]["sword"][id] == False:
                     self.blue_points = self.blue_points+20
                     self.blue_toy_counters += 1
+                    self.writeToLog("青チーム：売り場\tハット　配置\t+20点")
                 else:
                     self.blue_points = self.blue_points+5
+                    self.writeToLog("青チーム：売り場\tハット　配置\t+5点")
             else:
                 self.btn_blue_sashelves_sword[id]['bg'] = "#00FF00"
                 if self.position_state_blue["sales_floor"]["shelves"]["hat"][id] == False:
                     self.blue_points = self.blue_points+15
                     self.blue_toy_counters += 1
+                    self.writeToLog("青チーム：売り場\t剣　配置\t+15点")
+                else:
+                    self.writeToLog("青チーム：売り場\t剣　配置")
             self.update_points()
             self.position_state_blue["sales_floor"]["shelves"][type][id] = True
         else:
@@ -563,13 +563,18 @@ class Application(tk.Frame):
                 if self.position_state_blue["sales_floor"]["shelves"]["sword"][id] == False:
                     self.blue_points = self.blue_points-20
                     self.blue_toy_counters -= 1
+                    self.writeToLog("青チーム：売り場\tハット　配置取り消し\t-20点")
                 else:
                     self.blue_points = self.blue_points-5
+                    self.writeToLog("青チーム：売り場\tハット　配置取り消し\t-5点")
             else:
                 self.btn_blue_sashelves_sword[id]['bg'] = "#FFFFFF"
                 if self.position_state_blue["sales_floor"]["shelves"]["hat"][id] == False:
                     self.blue_points = self.blue_points-15
                     self.blue_toy_counters -= 1
+                    self.writeToLog("青チーム：売り場\t剣　配置取り消し\t+15点")
+                else:
+                    self.writeToLog("青チーム：売り場\t剣　配置取り消し")
             self.update_points()
             self.position_state_blue["sales_floor"]["shelves"][type][id] = False
 
@@ -578,9 +583,9 @@ class Application(tk.Frame):
             if type == "hat":
                 self.btn_red_shshelves_hat[id]['bg'] = "#00FF00"
                 if self.position_state_red["showcase"]["shelves"]["sword"][id] == False:
-                    self.red_points = self.red_points+35
+                    self.red_points = self.red_points+30
                     self.red_toy_counters += 1
-                    self.writeToLog("赤チーム：ショーケース\tハット　配置\t+35点")
+                    self.writeToLog("赤チーム：ショーケース\tハット　配置\t+30点")
                 else:
                     self.red_points = self.red_points+5
                     self.writeToLog("赤チーム：ショーケース\tハット　配置\t+5点")
@@ -620,15 +625,20 @@ class Application(tk.Frame):
             if type == "hat":
                 self.btn_blue_shshelves_hat[id]['bg'] = "#00FF00"
                 if self.position_state_blue["showcase"]["shelves"]["sword"][id] == False:
-                    self.blue_points = self.blue_points+35
+                    self.blue_points = self.blue_points+30
                     self.blue_toy_counters += 1
+                    self.writeToLog("青チーム：ショーケース\tハット　配置\t+30点")
                 else:
                     self.blue_points = self.blue_points+5
+                    self.writeToLog("青チーム：ショーケース\tハット　配置\t+5点")
             else:
                 self.btn_blue_shshelves_sword[id]['bg'] = "#00FF00"
                 if self.position_state_blue["showcase"]["shelves"]["hat"][id] == False:
                     self.blue_points = self.blue_points+25
                     self.blue_toy_counters += 1
+                    self.writeToLog("青チーム：ショーケース\t剣　配置\t+25点")
+                else:
+                    self.writeToLog("青チーム：ショーケース\t剣　配置")
             self.update_points()
             self.position_state_blue["showcase"]["shelves"][type][id] = True
         else:
@@ -637,20 +647,20 @@ class Application(tk.Frame):
                 if self.position_state_blue["showcase"]["shelves"]["sword"][id] == False:
                     self.blue_points = self.blue_points-30
                     self.blue_toy_counters -= 1
+                    self.writeToLog("青チーム：ショーケース\tハット　配置取り消し\t-30点")
                 else:
                     self.blue_points = self.blue_points-5
+                    self.writeToLog("青チーム：ショーケース\tハット　配置取り消し\t-5点")
             else:
                 self.btn_blue_shshelves_sword[id]['bg'] = "#FFFFFF"
                 if self.position_state_blue["showcase"]["shelves"]["hat"][id] == False:
                     self.blue_points = self.blue_points-25
                     self.blue_toy_counters -= 1
+                    self.writeToLog("青チーム：ショーケース\t剣　配置取り消し\t-25点")
+                else:
+                    self.writeToLog("青チーム：ショーケース\t剣　配置取り消し")
             self.update_points()
             self.position_state_blue["showcase"]["shelves"][type][id] = False
-
-    def btn_test(self):
-        self.red_points = self.red_points+1
-        self.update_points()
-        print(self.red_points)
 
     def btn_reset(self):
         self.red_points = 0
@@ -658,7 +668,12 @@ class Application(tk.Frame):
         self.red_toy_counters = 0
         self.blue_toy_counters = 0
 
-        # TODO:ワーク取得時のリセットをつける
+        # フィールド上のボタンのリセット
+        self.btn_red_toy_acquisition["bg"] = "#FFFFFF"
+        self.state_red_toy_acquisition = False
+        self.btn_blue_toy_acquisition["bg"] = "#FFFFFF"
+        self.state_blue_toy_acquisition = False
+
         for i in range(len(self.position_state_red["back_yard"]["shelves"]["hat"])):
             self.position_state_red["back_yard"]["shelves"]["hat"][i] = False
             self.btn_red_byshelves_hat[i]['bg'] = "#FFFFFF"
