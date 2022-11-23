@@ -1,0 +1,1 @@
+pyinstaller --onefile --noconsole --icon=harurobo.ico main.py

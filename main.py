@@ -3,6 +3,7 @@ import tkinter.font as tk_font
 from tkinter import ttk
 from PIL import ImageTk
 import json
+import datetime
 
 
 class Application(tk.Frame):
@@ -32,9 +33,10 @@ class Application(tk.Frame):
     def __init__(self):
         self.master = tk.Tk()
 
-        self.master.title("画像の表示")       # ウィンドウタイトル
+        self.master.title("春ロボコン2023 得点計算ツール")       # ウィンドウタイトル
         self.master.geometry("1920x1080")     # ウィンドウサイズ(幅x高さ)
         self.master.attributes('-fullscreen', True)
+        self.master.iconbitmap(default='harurobo.ico')
 
         # Canvasの作成
         self.canvas = tk.Canvas(self.master)
@@ -56,9 +58,17 @@ class Application(tk.Frame):
         # 画像の描画
         self.canvas.create_image(
             canvas_width / 2,       # 画像表示位置(Canvasの中心)
-            canvas_height * 0.6,
+            canvas_height * 0.58,
             image=self.photo_image,  # 表示画像データ
         )
+
+        self.log = tk.Text(self.master, state='disabled', borderwidth=5,
+                           width=180, height=5, wrap='none',)
+        ys = ttk.Scrollbar(self.master, orient='vertical',
+                           command=self.log.yview)
+        self.log['yscrollcommand'] = ys.set
+        self.log.insert('end', "Lorem ipsum...\n...\n...")
+        self.log.place(x=20, y=canvas_height*0.91)
 
         points_width = canvas_width/4
         points_height = canvas_height/6
@@ -119,8 +129,10 @@ class Application(tk.Frame):
             self.master, textvariable=red_team_val, value=self.team_list["team_name"], font=combobox_font, width=20)
         self.blue_team = tk.ttk.Combobox(
             self.master, textvariable=blue_team_val, value=self.team_list["team_name"], font=combobox_font, width=20)
-        self.red_team.bind('<<ComboboxSelected>>', self.update_team_name)
-        self.blue_team.bind('<<ComboboxSelected>>', self.update_team_name)
+        self.red_team.bind('<<ComboboxSelected>>',
+                           self.update_team_name)
+        self.blue_team.bind('<<ComboboxSelected>>',
+                            self.update_team_name)
 
         red_team_label.place(x=20, y=90)
         blue_team_label.place(x=20, y=130)
@@ -146,7 +158,6 @@ class Application(tk.Frame):
 
         self.setup_btns(canvas_width, canvas_height)
 
-
 #  print(len(self.btn_red_hat_byshelves))
 
         self.master.mainloop()
@@ -159,11 +170,11 @@ class Application(tk.Frame):
         self.btn_red_toy_acquisition = tk.Button(
             self.master, text='ワーク\n取得', command=self.btn_red_toy_acquisition_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
         self.btn_red_toy_acquisition.place(
-            x=canvas_width/2-btn_toy_acquisition_pos, y=canvas_height*0.68, anchor=tk.CENTER)
+            x=canvas_width/2-btn_toy_acquisition_pos, y=canvas_height*0.63, anchor=tk.CENTER)
         self.btn_blue_toy_acquisition = tk.Button(
             self.master, text='ワーク\n取得', command=self.btn_blue_toy_acquisition_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
         self.btn_blue_toy_acquisition.place(
-            x=canvas_width/2+btn_toy_acquisition_pos, y=canvas_height*0.68, anchor=tk.CENTER)
+            x=canvas_width/2+btn_toy_acquisition_pos, y=canvas_height*0.63, anchor=tk.CENTER)
 
         self.btn_red_byshelves_hat = []
         self.btn_red_byshelves_sword = []
@@ -187,172 +198,183 @@ class Application(tk.Frame):
         self.btn_red_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_hat[0].place(
-            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.87, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.825, anchor=tk.CENTER)
 
         self.btn_red_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_sword[0].place(
-            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.945, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_0_pos, y=canvas_height*0.89, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_hat[0].place(
-            x=canvas_width/2+btn_byshelves_0_pos, y=canvas_height*0.87, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_0_pos, y=canvas_height*0.825, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_sword[0].place(
-            x=canvas_width/2+btn_byshelves_0_pos, y=canvas_height*0.945, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_0_pos, y=canvas_height*0.89, anchor=tk.CENTER)
 
         btn_byshelves_1_pos = 400
         self.btn_red_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_hat[1].place(
-            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.735, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.685, anchor=tk.CENTER)
 
         btn_byshelves_2_pos = 300
         self.btn_red_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_sword[1].place(
-            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.735, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.685, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_hat[1].place(
-            x=canvas_width/2+btn_byshelves_1_pos, y=canvas_height*0.735, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_1_pos, y=canvas_height*0.685, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_sword[1].place(
-            x=canvas_width/2+btn_byshelves_2_pos, y=canvas_height*0.735, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_2_pos, y=canvas_height*0.685, anchor=tk.CENTER)
 
         self.btn_red_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_hat[2].place(
-            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.65, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.6, anchor=tk.CENTER)
 
         self.btn_red_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_sword[2].place(
-            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.65, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.6, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_hat[2].place(
-            x=canvas_width/2+btn_byshelves_1_pos, y=canvas_height*0.65, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_1_pos, y=canvas_height*0.6, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_sword[2].place(
-            x=canvas_width/2+btn_byshelves_2_pos, y=canvas_height*0.65, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_2_pos, y=canvas_height*0.6, anchor=tk.CENTER)
 
         self.btn_red_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_hat[3].place(
-            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.565, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_1_pos, y=canvas_height*0.515, anchor=tk.CENTER)
 
         self.btn_red_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_byshelves_sword[3].place(
-            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.565, anchor=tk.CENTER)
+            x=canvas_width/2-btn_byshelves_2_pos, y=canvas_height*0.515, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_hat[3].place(
-            x=canvas_width/2+btn_byshelves_1_pos, y=canvas_height*0.565, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_1_pos, y=canvas_height*0.515, anchor=tk.CENTER)
 
         self.btn_blue_byshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_byshelves_sword[3].place(
-            x=canvas_width/2+btn_byshelves_2_pos, y=canvas_height*0.565, anchor=tk.CENTER)
+            x=canvas_width/2+btn_byshelves_2_pos, y=canvas_height*0.515, anchor=tk.CENTER)
 
         btn_sashelves_0_pos = 350
         self.btn_red_sashelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_sashelves_hat[0].place(
-            x=canvas_width/2-btn_sashelves_0_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2-btn_sashelves_0_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         btn_sashelves_1_pos = 260
         self.btn_red_sashelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_sashelves_sword[0].place(
-            x=canvas_width/2-btn_sashelves_1_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2-btn_sashelves_1_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         self.btn_blue_sashelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_sashelves_hat[0].place(
-            x=canvas_width/2+btn_sashelves_0_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2+btn_sashelves_0_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         self.btn_blue_sashelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_sashelves_sword[0].place(
-            x=canvas_width/2+btn_sashelves_1_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2+btn_sashelves_1_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         btn_sashelves_2_pos = 170
         self.btn_red_sashelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_sashelves_hat[1].place(
-            x=canvas_width/2-btn_sashelves_2_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2-btn_sashelves_2_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         btn_sashelves_3_pos = 80
         self.btn_red_sashelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_sashelves_sword[1].place(
-            x=canvas_width/2-btn_sashelves_3_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2-btn_sashelves_3_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         self.btn_blue_sashelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_sashelves_hat[1].place(
-            x=canvas_width/2+btn_sashelves_2_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2+btn_sashelves_2_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         self.btn_blue_sashelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_sashelves_sword[1].place(
-            x=canvas_width/2+btn_sashelves_3_pos, y=canvas_height*0.455, anchor=tk.CENTER)
+            x=canvas_width/2+btn_sashelves_3_pos, y=canvas_height*0.405, anchor=tk.CENTER)
 
         btn_shshelves_0_pos = 400
         self.btn_red_shshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_shshelves_hat[0].place(
-            x=canvas_width/2-btn_shshelves_0_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2-btn_shshelves_0_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         btn_shshelves_1_pos = 300
         self.btn_red_shshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_shshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_shshelves_sword[0].place(
-            x=canvas_width/2-btn_shshelves_1_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2-btn_shshelves_1_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         self.btn_blue_shshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_shshelves_hat[0].place(
-            x=canvas_width/2+btn_shshelves_0_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2+btn_shshelves_0_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         self.btn_blue_shshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_shshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_shshelves_sword[0].place(
-            x=canvas_width/2+btn_shshelves_1_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2+btn_shshelves_1_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         btn_shshelves_2_pos = 120
         self.btn_red_shshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_shshelves_hat[1].place(
-            x=canvas_width/2-btn_shshelves_2_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2-btn_shshelves_2_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         btn_shshelves_3_pos = 40
         self.btn_red_shshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_red_shshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_red_shshelves_sword[1].place(
-            x=canvas_width/2-btn_shshelves_3_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2-btn_shshelves_3_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         self.btn_blue_shshelves_hat.append(tk.Button(
             self.master, text='ハット', command=lambda: self.btn_blue_shshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_shshelves_hat[1].place(
-            x=canvas_width/2+btn_shshelves_2_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2+btn_shshelves_2_pos, y=canvas_height*0.26, anchor=tk.CENTER)
 
         self.btn_blue_shshelves_sword.append(tk.Button(
             self.master, text='剣', command=lambda: self.btn_blue_shshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
         self.btn_blue_shshelves_sword[1].place(
-            x=canvas_width/2+btn_shshelves_3_pos, y=canvas_height*0.31, anchor=tk.CENTER)
+            x=canvas_width/2+btn_shshelves_3_pos, y=canvas_height*0.26, anchor=tk.CENTER)
+
+    def writeToLog(self, msg):
+        numlines = int(self.log.index('end - 1 line').split('.')[0])
+        self.log['state'] = 'normal'
+        # if numlines==24:
+        # #log.delete(1.0, 2.0)
+        if self.log.index('end-1c') != '1.0':
+            self.log.insert('1.0', '\n')
+        self.log.insert('1.0', str(datetime.datetime.now()
+                                   ) + "\t" + msg)
+        self.log['state'] = 'disabled'
 
     # 得点更新
     def update_points(self):
@@ -364,8 +386,12 @@ class Application(tk.Frame):
             print("陳列タイム終了")
 
     def update_team_name(self, event):
-        self.red_team_text.set(self.red_team.get())
-        self.blue_team_text.set(self.blue_team.get())
+        if self.red_team_text.get() != self.red_team.get():
+            self.red_team_text.set(self.red_team.get())
+            self.writeToLog("赤チーム："+self.red_team_text.get()+"\tが設定されました。")
+        if self.blue_team_text.get() != self.blue_team.get():
+            self.blue_team_text.set(self.blue_team.get())
+            self.writeToLog("青チーム："+self.blue_team_text.get()+"\tが設定されました。")
 
     # ウィンドウクローズ
     def btn_close(self):
@@ -377,11 +403,13 @@ class Application(tk.Frame):
             self.update_points()
             self.btn_red_toy_acquisition['bg'] = "#00FF00"
             self.state_red_toy_acquisition = True
+            self.writeToLog("赤チーム：おもちゃ取得\t+5点")
         else:
             self.red_points = self.red_points-5
             self.update_points()
             self.btn_red_toy_acquisition['bg'] = "#FFFFFF"
             self.state_red_toy_acquisition = False
+            self.writeToLog("赤チーム：おもちゃ取得取り消し\t-5点")
 
     def btn_blue_toy_acquisition_act(self):
         if self.state_blue_toy_acquisition == False:
@@ -389,11 +417,13 @@ class Application(tk.Frame):
             self.update_points()
             self.btn_blue_toy_acquisition['bg'] = "#00FF00"
             self.state_blue_toy_acquisition = True
+            self.writeToLog("青チーム：おもちゃ取得\t+5点")
         else:
             self.blue_points = self.blue_points-5
             self.update_points()
             self.btn_blue_toy_acquisition['bg'] = "#FFFFFF"
             self.state_blue_toy_acquisition = False
+            self.writeToLog("青チーム：おもちゃ取得取り消し\t-5点")
 
     def btn_red_byshelves_act(self, type, id):
         if self.position_state_red["back_yard"]["shelves"][type][id] == False:
@@ -402,13 +432,18 @@ class Application(tk.Frame):
                 if self.position_state_red["back_yard"]["shelves"]["sword"][id] == False:
                     self.red_points = self.red_points+10
                     self.red_toy_counters += 1
+                    self.writeToLog("赤チーム：バックヤード\tハット　配置\t+10点")
                 else:
                     self.red_points = self.red_points+5
+                    self.writeToLog("赤チーム：バックヤード\tハット　配置\t+5点")
             else:
                 self.btn_red_byshelves_sword[id]['bg'] = "#00FF00"
                 if self.position_state_red["back_yard"]["shelves"]["hat"][id] == False:
                     self.red_points = self.red_points+5
                     self.red_toy_counters += 1
+                    self.writeToLog("赤チーム：バックヤード\t剣　配置\t+5点")
+                else:
+                    self.writeToLog("赤チーム：バックヤード\t剣　配置")
             self.update_points()
             self.position_state_red["back_yard"]["shelves"][type][id] = True
         else:
@@ -416,14 +451,19 @@ class Application(tk.Frame):
                 self.btn_red_byshelves_hat[id]['bg'] = "#FFFFFF"
                 if self.position_state_red["back_yard"]["shelves"]["sword"][id] == False:
                     self.red_points = self.red_points-10
+                    self.writeToLog("赤チーム：バックヤード\tハット　配置取り消し\t-10点")
                     self.red_toy_counters -= 1
                 else:
                     self.red_points = self.red_points-5
+                    self.writeToLog("赤チーム：バックヤード\tハット　配置取り消し\t-5点")
             else:
                 self.btn_red_byshelves_sword[id]['bg'] = "#FFFFFF"
                 if self.position_state_red["back_yard"]["shelves"]["hat"][id] == False:
                     self.red_points = self.red_points-5
                     self.red_toy_counters -= 1
+                    self.writeToLog("赤チーム：バックヤード\t剣　配置取り消し\t-5点")
+                else:
+                    self.writeToLog("赤チーム：バックヤード\t剣　配置取り消し")
             self.update_points()
             self.position_state_red["back_yard"]["shelves"][type][id] = False
 
@@ -466,13 +506,18 @@ class Application(tk.Frame):
                 if self.position_state_red["sales_floor"]["shelves"]["sword"][id] == False:
                     self.red_points = self.red_points+20
                     self.red_toy_counters += 1
+                    self.writeToLog("赤チーム：売り場\tハット　配置\t+20点")
                 else:
                     self.red_points = self.red_points+5
+                    self.writeToLog("赤チーム：売り場\tハット　配置\t+5点")
             else:
                 self.btn_red_sashelves_sword[id]['bg'] = "#00FF00"
                 if self.position_state_red["sales_floor"]["shelves"]["hat"][id] == False:
                     self.red_points = self.red_points+15
                     self.red_toy_counters += 1
+                    self.writeToLog("赤チーム：売り場\t剣　配置\t+15点")
+                else:
+                    self.writeToLog("赤チーム：売り場\t剣　配置")
             self.update_points()
             self.position_state_red["sales_floor"]["shelves"][type][id] = True
         else:
@@ -481,13 +526,18 @@ class Application(tk.Frame):
                 if self.position_state_red["sales_floor"]["shelves"]["sword"][id] == False:
                     self.red_points = self.red_points-20
                     self.red_toy_counters -= 1
+                    self.writeToLog("赤チーム：売り場\tハット　配置取り消し\t-20点")
                 else:
                     self.red_points = self.red_points-5
+                    self.writeToLog("赤チーム：売り場\tハット　配置取り消し\t-5点")
             else:
                 self.btn_red_sashelves_sword[id]['bg'] = "#FFFFFF"
                 if self.position_state_red["sales_floor"]["shelves"]["hat"][id] == False:
                     self.red_points = self.red_points-15
                     self.red_toy_counters -= 1
+                    self.writeToLog("赤チーム：売り場\t剣　配置取り消し\t-15点")
+                else:
+                    self.writeToLog("赤チーム：売り場\t剣　配置取り消し")
             self.update_points()
             self.position_state_red["sales_floor"]["shelves"][type][id] = False
 
@@ -530,13 +580,18 @@ class Application(tk.Frame):
                 if self.position_state_red["showcase"]["shelves"]["sword"][id] == False:
                     self.red_points = self.red_points+35
                     self.red_toy_counters += 1
+                    self.writeToLog("赤チーム：ショーケース\tハット　配置\t+35点")
                 else:
                     self.red_points = self.red_points+5
+                    self.writeToLog("赤チーム：ショーケース\tハット　配置\t+5点")
             else:
                 self.btn_red_shshelves_sword[id]['bg'] = "#00FF00"
                 if self.position_state_red["showcase"]["shelves"]["hat"][id] == False:
                     self.red_points = self.red_points+25
                     self.red_toy_counters += 1
+                    self.writeToLog("赤チーム：ショーケース\t剣　配置\t+25点")
+                else:
+                    self.writeToLog("赤チーム：ショーケース\t剣　配置")
             self.update_points()
             self.position_state_red["showcase"]["shelves"][type][id] = True
         else:
@@ -545,13 +600,18 @@ class Application(tk.Frame):
                 if self.position_state_red["showcase"]["shelves"]["sword"][id] == False:
                     self.red_points = self.red_points-30
                     self.red_toy_counters -= 1
+                    self.writeToLog("赤チーム：ショーケース\tハット　配置取り消し\t-30点")
                 else:
                     self.red_points = self.red_points-5
+                    self.writeToLog("赤チーム：ショーケース\tハット　配置取り消し\t-5点")
             else:
                 self.btn_red_shshelves_sword[id]['bg'] = "#FFFFFF"
                 if self.position_state_red["showcase"]["shelves"]["hat"][id] == False:
                     self.red_points = self.red_points-25
                     self.red_toy_counters -= 1
+                    self.writeToLog("赤チーム：ショーケース\t剣　配置取り消し\t-25点")
+                else:
+                    self.writeToLog("赤チーム：ショーケース\t剣　配置取り消し")
             self.update_points()
             self.position_state_red["showcase"]["shelves"][type][id] = False
 
