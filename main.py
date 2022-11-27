@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import tkinter as tk
 import tkinter.font as tk_font
 from tkinter import ttk
@@ -5,6 +8,7 @@ from PIL import ImageTk
 import json
 import datetime
 from enum import Enum
+import pygame
 
 
 class Application(tk.Frame):
@@ -19,8 +23,18 @@ class Application(tk.Frame):
         stop = 0
         run = 1
         pause = 2
-        count_down_to_run = 3
-        count_down = 4
+        end = 3
+        count_down_to_run = 4
+        count_down = 5
+
+    pygame.mixer.init(frequency=44100)    # 音声初期設定
+
+    class sound():
+        start = pygame.mixer.Sound(
+            ".\sound\start.mp3")
+        count_down = pygame.mixer.Sound(
+            ".\sound\count_down.mp3")
+        end = pygame.mixer.Sound(".\sound\end.mp3")
 
     red_points = 0
     blue_points = 0
@@ -57,12 +71,10 @@ class Application(tk.Frame):
         self.master.title("春ロボコン2023 得点計算ツール")       # ウィンドウタイトル
         self.master.geometry("1792x1008")     # ウィンドウサイズ(幅x高さ)
         # self.master.attributes('-fullscreen', True)
-        self.master.iconbitmap(default='harurobo.ico')
+        self.master.iconbitmap(default='harurobo.ico')  # アイコン設定
 
-        # Canvasの作成
-        self.canvas = tk.Canvas(self.master)
-        # Canvasを配置
-        self.canvas.pack(expand=True, fill=tk.BOTH)
+        self.canvas = tk.Canvas(self.master)  # Canvasの作成
+        self.canvas.pack(expand=True, fill=tk.BOTH)  # Canvasを配置
 
         app_name_label = tk.Label(self.master, text="春ロボコン2023\n得点計算ツール",
                                   fg="#000000", font=("HGPゴシックE", 18, "bold"), anchor=tk.CENTER)
@@ -224,8 +236,6 @@ class Application(tk.Frame):
     def timer_set_state_txt(self):  # BUG:上手く、タイマーのラベルが表示遷移しない
         if self.state_timer_mode == self.timer_mode.count_down:
             self.timer_state_txt.set("Ready?")
-        elif self.state_timer_mode == self.timer_mode.count_down_to_run:
-            self.timer_state_label.place_forget()
         elif self.state_time_mode == self.time_mode.setting1:
             self.timer_state_txt.set("セッティングタイム1")
         elif self.state_time_mode == self.time_mode.setting2:
@@ -234,46 +244,54 @@ class Application(tk.Frame):
             self.timer_state_txt.set("陳列タイム")
         elif self.state_time_mode == self.time_mode.sales_time:
             self.timer_state_txt.set("販売タイム")
-        else:
-            self.timer_state_txt.set("Test")
-        self.timer_state_label.place(x=1630, y=10)
+
+        self.timer_state_label.place(x=1643, y=40, anchor=tk.CENTER)
 
     def timer_set_sec(self):
-        if self.state_time_mode == (self.time_mode.NONE or self.time_mode.setting1 or self.time_mode.setting2):
-            self.timer_sec = 60
+        if (self.state_time_mode == self.time_mode.NONE) or (self.state_time_mode == self.time_mode.setting1) or (self.state_time_mode == self.time_mode.setting2):
+            self.timer_sec = 2
         else:
             self.timer_sec = 90
         self.timer_colon_txt.set(":")
-        self.timer_min_label.place(x=1565, y=50)
-        self.timer_colon_label.place(x=1630, y=48)
-        self.timer_sec_label.place(x=1660, y=50)
+        self.timer_min_label.place(x=1593, y=100, anchor=tk.CENTER)
+        self.timer_colon_label.place(x=1643, y=95, anchor=tk.CENTER)
+        self.timer_sec_label.place(x=1693, y=100, anchor=tk.CENTER)
         self.timer_show()
 
     def timer_reset(self):
         self.timer_set_sec()
         self.state_timer_mode = self.timer_mode.stop
+        self.timer_set_state_txt()
         self.btn_timer_start.place(x=1530, y=260)
         self.btn_timer_pause.place_forget()
 
     def timer(self):
-        if self.state_timer_mode == self.timer_mode.count_down:  # TODO:カウントダウンモードも実装する
+        if self.state_timer_mode == self.timer_mode.count_down:
             if self.timer_sec == 0:
                 self.timer_sec_label.place_forget()
                 self.timer_min_label.place_forget()
+                self.timer_state_label.place_forget()
                 self.timer_colon_txt.set("START!")
-                self.timer_colon_label.place(x=1535, y=28)
+                self.sound.start.play()
                 self.state_timer_mode = self.timer_mode.count_down_to_run
             else:
                 self.timer_show()
                 self.timer_sec -= 1
+                self.sound.count_down.play()
+
             self.master.after(1000, self.timer)
         elif self.state_timer_mode == self.timer_mode.count_down_to_run:
             self.timer_set_sec()
             self.state_timer_mode = self.timer_mode.run
+            self.timer_set_state_txt()
 
         if self.state_timer_mode == self.timer_mode.run:
             if self.timer_sec == 0:  # TODO:音を鳴らす機能を実装する
-                self.state_timer_mode = self.timer_mode.stop
+                self.timer_sec_label.place_forget()
+                self.timer_min_label.place_forget()
+                self.timer_colon_txt.set("Finish!")
+                self.sound.end.play()
+                self.state_timer_mode = self.timer_mode.end
             if self.state_timer_mode == self.timer_mode.run:
                 self.timer_show()
                 self.timer_sec -= 1
@@ -288,19 +306,20 @@ class Application(tk.Frame):
             self.timer_sec_txt.set(str(self.timer_sec % 60).zfill(2))
 
     def setup_cmd_btn(self):
-        btn_cmd_x = 1500
+        btn_cmd_x = 1643
 
         btn_rst_font = tk_font.Font(
             self.master, family="HGPゴシックE", size=18, weight="bold")
         btn_rst = tk.Button(self.master, text='リセット', command=self.btn_reset, height=int(
             self.canvas_height/1000), width=18, font=btn_rst_font, relief=tk.RAISED, bd=5, anchor=tk.CENTER)
-        btn_rst.place(x=btn_cmd_x, y=self.canvas_height*0.8)
+        btn_rst.place(x=btn_cmd_x, y=self.canvas_height*0.8, anchor=tk.CENTER)
 
         btn_close_font = tk_font.Font(
             self.master, family="HGPゴシックE", size=25, weight="bold")
         btn_close = tk.Button(self.master, text='閉じる', command=self.btn_close, height=int(
             self.canvas_height/1000), width=int(18*18/25)+2, bg='#FF0000', fg='#FFFFFF', font=btn_close_font, anchor=tk.CENTER)
-        btn_close.place(x=btn_cmd_x, y=self.canvas_height*0.9)
+        btn_close.place(x=btn_cmd_x, y=self.canvas_height *
+                        0.9, anchor=tk.CENTER)
 
         self.canvas.create_line(1494, 340, 1792, 340, fill="#696969", width=5)
         self.canvas.create_line(1494, 760, 1792, 760, fill="#696969", width=5)
@@ -308,26 +327,24 @@ class Application(tk.Frame):
             self.master, family="HGPゴシックE", size=24, weight="bold")
         cmd_btn_label = tk.Label(self.master, text='試合進行',
                                  font=btn_times_label_font, anchor=tk.CENTER)
-        cmd_btn_label.place(x=1500, y=370)
+        cmd_btn_label.place(x=1510, y=370)
 
         btn_times_font = tk_font.Font(
             self.master, family="HGPゴシックE", size=18, weight="bold")
         btn_times_width = 18
         self.btn_setting_time1 = tk.Button(self.master, text='セッティングタイム1', command=lambda: self.set_mode_timer(self.time_mode.setting1), height=int(
             self.canvas_height/1000), width=btn_times_width, bg='#FFFFFF', fg='#000000', font=btn_times_font, anchor=tk.CENTER)
-        self.btn_setting_time1.place(x=btn_cmd_x, y=430)
-
         self.btn_display_time = tk.Button(self.master, text='陳列タイム', command=lambda: self.set_mode_timer(self.time_mode.display_time), height=int(
             self.canvas_height/1000), width=btn_times_width, bg='#FFFFFF', fg='#000000', font=btn_times_font, anchor=tk.CENTER)
-        self.btn_display_time.place(x=btn_cmd_x, y=500)
-
         self.btn_setting_time2 = tk.Button(self.master, text='セッティングタイム2', command=lambda: self.set_mode_timer(self.time_mode.setting2), height=int(
             self.canvas_height/1000), width=btn_times_width, bg='#FFFFFF', fg='#000000', font=btn_times_font, anchor=tk.CENTER)
-        self.btn_setting_time2.place(x=btn_cmd_x, y=590)
-
         self.btn_sales_time = tk.Button(self.master, text='販売タイム', command=lambda: self.set_mode_timer(self.time_mode.sales_time), height=int(
-            self.canvas_height/1000), width=btn_times_width, bg='#FFFFFF', fg='#000000', font=btn_times_font, anchor=tk.CENTER)
-        self.btn_sales_time.place(x=btn_cmd_x, y=660)
+            self.canvas_height/1000), width=btn_times_width, bg='#FFFFFF', fg='#000000', font=btn_times_font)
+
+        self.btn_setting_time1.place(x=btn_cmd_x, y=460, anchor=tk.CENTER)
+        self.btn_display_time.place(x=btn_cmd_x, y=540, anchor=tk.CENTER)
+        self.btn_setting_time2.place(x=btn_cmd_x, y=620, anchor=tk.CENTER)
+        self.btn_sales_time.place(x=btn_cmd_x, y=700, anchor=tk.CENTER)
 
     def def_btns_field_display_time(self):
         self.btn_red_byshelves_hat = []
@@ -384,7 +401,6 @@ class Application(tk.Frame):
             self.btn_blue_shshelves_sword.append(tk.Button(
                 self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
 
-    # TODO: pos変数配列化＆可読性向上
     def show_btns_field_display_time(self):
         btn_toy_acquisition_pos = 70
         self.btn_red_toy_acquisition.place(
@@ -483,6 +499,25 @@ class Application(tk.Frame):
 
         self.btn_exist = True
 
+    def hide_btns_field_display_time(self):
+        self.btn_red_toy_acquisition.place_forget()
+        self.btn_blue_toy_acquisition.place_forget()
+        for i in range(len(self.position_state_red["back_yard"]["shelves"]["hat"])):
+            self.btn_red_byshelves_hat[i].place_forget()
+            self.btn_blue_byshelves_hat[i].place_forget()
+            self.btn_red_byshelves_sword[i].place_forget()
+            self.btn_blue_byshelves_sword[i].place_forget()
+        for i in range(len(self.position_state_red["sales_floor"]["shelves"]["hat"])):
+            self.btn_red_sashelves_hat[i].place_forget()
+            self.btn_blue_sashelves_hat[i].place_forget()
+            self.btn_red_sashelves_sword[i].place_forget()
+            self.btn_blue_sashelves_sword[i].place_forget()
+        for i in range(len(self.position_state_red["showcase"]["shelves"]["hat"])):
+            self.btn_red_shshelves_hat[i].place_forget()
+            self.btn_blue_shshelves_hat[i].place_forget()
+            self.btn_red_shshelves_sword[i].place_forget()
+            self.btn_blue_shshelves_sword[i].place_forget()
+
     def set_mode_timer(self, mode):
         if self.state_time_mode == mode:
             if mode == self.time_mode.setting1:
@@ -509,37 +544,24 @@ class Application(tk.Frame):
             # 動作モードのボタンを緑色に表示
             if mode == self.time_mode.setting1:
                 self.btn_setting_time1['bg'] = "#00FF00"
+                self.writeToLog("試合進行：セッティングタイム1　が選択されました。")
                 self.show_btns_field_display_time()
             elif mode == self.time_mode.setting2:
                 self.btn_setting_time2['bg'] = "#00FF00"
+                self.writeToLog("試合進行：セッティングタイム2　が選択されました。")
             elif mode == self.time_mode.display_time:
                 self.btn_display_time['bg'] = "#00FF00"
+                self.writeToLog("試合進行：陳列タイム　が選択されました。")
             elif mode == self.time_mode.sales_time:
                 self.btn_sales_time['bg'] = "#00FF00"
+                self.writeToLog("試合進行：販売タイム　が選択されました。")
 
-            self.timer_reset()
             self.state_time_mode = mode
+            self.timer_reset()
             self.state_timer_mode = self.timer_mode.stop
 
     def setup_sales_time(self):
-        if self.btn_exist == True:
-            self.btn_red_toy_acquisition.place_forget()
-            self.btn_blue_toy_acquisition.place_forget()
-            for i in range(len(self.btn_red_byshelves_hat)):
-                self.btn_red_byshelves_hat[i].place_forget()
-                self.btn_red_byshelves_sword[i].place_forget()
-                self.btn_blue_byshelves_hat[i].place_forget()
-                self.btn_blue_byshelves_sword[i].place_forget()
-            for i in range(len(self.btn_red_sashelves_hat)):
-                self.btn_red_sashelves_hat[i].place_forget()
-                self.btn_red_sashelves_sword[i].place_forget()
-                self.btn_blue_sashelves_hat[i].place_forget()
-                self.btn_blue_sashelves_sword[i].place_forget()
-            for i in range(len(self.btn_red_shshelves_hat)):
-                self.btn_red_shshelves_hat[i].place_forget()
-                self.btn_red_shshelves_sword[i].place_forget()
-                self.btn_blue_shshelves_hat[i].place_forget()
-                self.btn_blue_shshelves_sword[i].place_forget()
+        self.hide_btns_field_display_time()
 
     def writeToLog(self, msg):
         self.log['state'] = 'normal'
@@ -561,7 +583,7 @@ class Application(tk.Frame):
     def update_points(self):
         self.red_points_text.set(str(self.red_points))
         self.blue_points_text.set(str(self.blue_points))
-        if self.red_toy_counters >= 6:
+        if self.red_toy_counters >= 6:  # TODO:陳列タイム終了時のタイマー挙動を書く
             self.writeToLog("赤チーム：陳列タイム　終了")
         if self.blue_toy_counters >= 6:
             self.writeToLog("青チーム：陳列タイム　終了")
@@ -864,6 +886,9 @@ class Application(tk.Frame):
         self.red_toy_counters = 0
         self.blue_toy_counters = 0
 
+        # 試合進行系のボタンリセット
+        self.set_mode_timer(self.time_mode.NONE)
+
         # フィールド上のボタンのリセット
         self.btn_red_toy_acquisition["bg"] = "#FFFFFF"
         self.state.red_toy_acquisition = False
@@ -886,7 +911,9 @@ class Application(tk.Frame):
             self.position_state_red["showcase"]["shelves"]["sword"][i] = False
             self.btn_red_shshelves_sword[i]['bg'] = "#FFFFFF"
 
+        self.hide_btns_field_display_time()  # フィールド上のボタンを非表示
         self.update_points()
+        self.writeToLog("リセットしました")
 
 
 if __name__ == "__main__":

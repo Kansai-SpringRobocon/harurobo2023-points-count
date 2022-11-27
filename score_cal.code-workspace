@@ -7,7 +7,12 @@
 	"settings": {
 		"editor.formatOnSave": true,
 		"cSpell.words": [
+			"pygame",
 			"textvariable"
 		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": []
 	}
 }
