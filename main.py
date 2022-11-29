@@ -13,11 +13,11 @@ import pygame
 
 class Application(tk.Frame):
     class time_mode(Enum):
-        NONE = 0
         setting1 = 1
         setting2 = 2
         display_time = 3
         sales_time = 4
+        NONE = 99
 
     class timer_mode(Enum):
         stop = 0
@@ -26,6 +26,11 @@ class Application(tk.Frame):
         end = 3
         count_down_to_run = 4
         count_down = 5
+
+    class field_color(Enum):
+        red = 0
+        blue = 1
+        NONE = 99
 
     pygame.mixer.init(frequency=44100)    # 音声初期設定
 
@@ -46,8 +51,12 @@ class Application(tk.Frame):
         red_toy_acquisition = False
         blue_toy_acquisition = False
 
+        red_sold_out = False
+        blue_sold_out = False
+
     state_time_mode = time_mode.NONE
     state_timer_mode = timer_mode.stop
+    state_first_sold_out = field_color.NONE
 
     btn_exist = False
 
@@ -196,6 +205,7 @@ class Application(tk.Frame):
         self.timer_set_sec()
 
         self.def_btns_field_display_time()
+        self.def_btns_field_sales_time()
         self.setup_timer_btn()
         self.setup_cmd_btn()
 
@@ -233,7 +243,7 @@ class Application(tk.Frame):
         self.btn_timer_pause.place_forget()
         self.state_timer_mode = self.timer_mode.pause
 
-    def timer_set_state_txt(self):  # BUG:上手く、タイマーのラベルが表示遷移しない
+    def timer_set_state_txt(self):
         if self.state_timer_mode == self.timer_mode.count_down:
             self.timer_state_txt.set("Ready?")
         elif self.state_time_mode == self.time_mode.setting1:
@@ -346,6 +356,7 @@ class Application(tk.Frame):
         self.btn_setting_time2.place(x=btn_cmd_x, y=620, anchor=tk.CENTER)
         self.btn_sales_time.place(x=btn_cmd_x, y=700, anchor=tk.CENTER)
 
+    # 陳列タイムのボタン設定
     def def_btns_field_display_time(self):
         self.btn_red_byshelves_hat = []
         self.btn_red_byshelves_sword = []
@@ -372,34 +383,72 @@ class Application(tk.Frame):
         self.btn_blue_toy_acquisition = tk.Button(
             self.master, text='ワーク\n取得', command=self.btn_blue_toy_acquisition_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
 
-        for i in range(4):
-            self.btn_red_byshelves_hat.append(tk.Button(
-                self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_red_byshelves_sword.append(tk.Button(
-                self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_blue_byshelves_hat.append(tk.Button(
-                self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_blue_byshelves_sword.append(tk.Button(
-                self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_byshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
 
-        for i in range(2):
-            self.btn_red_sashelves_hat.append(tk.Button(
-                self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_red_sashelves_sword.append(tk.Button(
-                self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_blue_sashelves_hat.append(tk.Button(
-                self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_blue_sashelves_sword.append(tk.Button(
-                self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_sashelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_sashelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_sashelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_sashelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_sashelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
 
-            self.btn_red_shshelves_hat.append(tk.Button(
-                self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_red_shshelves_sword.append(tk.Button(
-                self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_blue_shshelves_hat.append(tk.Button(
-                self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
-            self.btn_blue_shshelves_sword.append(tk.Button(
-                self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", i), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_shshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_shshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_shshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_shshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_shshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_shshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_shshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_red_shshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_red_shshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_shshelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.btn_blue_shshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.btn_blue_shshelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.btn_blue_shshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
 
     def show_btns_field_display_time(self):
         btn_toy_acquisition_pos = 70
@@ -518,6 +567,89 @@ class Application(tk.Frame):
             self.btn_red_shshelves_sword[i].place_forget()
             self.btn_blue_shshelves_sword[i].place_forget()
 
+    def def_btns_field_sales_time(self):
+        print("販売タイム")  # TODO:販売タイムのボタンを定義する
+        btn_field_font = tk_font.Font(
+            self.master, family="HGPゴシックE", size=14, weight="bold")
+        self.btn_red_sold_out = tk.Button(
+            self.master, text='完売\n達成', command=lambda: self.btn_sold_out("red"), bg="#FFFFFF", font=btn_field_font)
+        self.btn_blue_sold_out = tk.Button(
+            self.master, text='完売\n達成', command=lambda: self.btn_sold_out("blue"), bg="#FFFFFF", font=btn_field_font)
+
+    def show_btns_field_sales_time(self):
+        # TODO:販売タイムのボタン表示を実装する
+        xplace_sold_out = 120
+        yplace_sold_out = 600
+        self.btn_red_sold_out.place(
+            x=self.canvas_width/2-xplace_sold_out+self.field_center_shift, y=yplace_sold_out, anchor=tk.CENTER)
+        self.btn_blue_sold_out.place(
+            x=self.canvas_width/2+xplace_sold_out+self.field_center_shift, y=yplace_sold_out, anchor=tk.CENTER)
+
+    def hide_btns_field_sales_time(self):
+        # TODO:販売タイムのボタン非表示を実装する
+        self.btn_red_sold_out.place_forget()
+        self.btn_blue_sold_out.place_forget()
+
+    def btn_sold_out(self, team):  # TODO:完売達成時の挙動を書く
+        if team == "red":
+            if self.state.red_sold_out == False:
+                if self.state_first_sold_out == self.field_color.NONE:
+                    self.red_points += 50
+                    self.state_first_sold_out = self.field_color.red
+                    self.writeToLog("赤チーム：完売 先達成\t +50点")
+                else:
+                    self.red_points += 40
+                    self.writeToLog("赤チーム：完売　達成\t +40点")
+                self.btn_red_sold_out["bg"] = "#00FF00"
+                self.state.red_sold_out = True
+            else:
+                if self.state_first_sold_out == self.field_color.red:
+                    self.red_points -= 50
+                    self.writeToLog("赤チーム：完売　取り消し\t -50点")
+                    if self.state.blue_sold_out == True:
+                        self.state_first_sold_out = self.field_color.blue
+                        self.blue_points += 10
+                        self.writeToLog("青チーム：完売 先達成\t +10点")
+                    else:
+                        self.state_first_sold_out = self.field_color.NONE
+                else:
+                    self.red_points -= 40
+                    self.writeToLog("赤チーム：完売　取り消し\t -40点")
+                    if self.state.blue_sold_out == False:
+                        self.state_first_sold_out = self.field_color.NONE
+                self.btn_red_sold_out["bg"] = "#FFFFFF"
+                self.state.red_sold_out = False
+        elif team == "blue":
+            if self.state.blue_sold_out == False:
+                if self.state_first_sold_out == self.field_color.NONE:
+                    self.blue_points += 50
+                    self.state_first_sold_out = self.field_color.blue
+                    self.writeToLog("青チーム：完売 先達成\t +50点")
+                else:
+                    self.blue_points += 40
+                    self.writeToLog("青チーム：完売　達成\t +40点")
+                self.btn_blue_sold_out["bg"] = "#00FF00"
+                self.state.blue_sold_out = True
+            else:
+                if self.state_first_sold_out == self.field_color.blue:
+                    self.blue_points -= 50
+                    self.writeToLog("青チーム：完売　取り消し\t -50点")
+                    if self.state.red_sold_out == True:
+                        self.state_first_sold_out = self.field_color.red
+                        self.red_points += 10
+                        self.writeToLog("赤チーム：完売 先達成\t +10点")
+                    else:
+                        self.state_first_sold_out = self.field_color.NONE
+                else:
+                    self.blue_points -= 40
+                    self.writeToLog("青チーム：完売　取り消し\t -40点")
+                    if self.state.red_sold_out == False:
+                        self.state_first_sold_out = self.field_color.NONE
+                self.btn_blue_sold_out["bg"] = "#FFFFFF"
+                self.state.blue_sold_out = False
+
+        self.update_points()
+
     def set_mode_timer(self, mode):
         if self.state_time_mode == mode:
             if mode == self.time_mode.setting1:
@@ -545,10 +677,13 @@ class Application(tk.Frame):
             if mode == self.time_mode.setting1:
                 self.btn_setting_time1['bg'] = "#00FF00"
                 self.writeToLog("試合進行：セッティングタイム1　が選択されました。")
+                self.hide_btns_field_sales_time()
                 self.show_btns_field_display_time()
             elif mode == self.time_mode.setting2:
                 self.btn_setting_time2['bg'] = "#00FF00"
                 self.writeToLog("試合進行：セッティングタイム2　が選択されました。")
+                self.hide_btns_field_display_time()
+                self.show_btns_field_sales_time()
             elif mode == self.time_mode.display_time:
                 self.btn_display_time['bg'] = "#00FF00"
                 self.writeToLog("試合進行：陳列タイム　が選択されました。")
@@ -603,30 +738,28 @@ class Application(tk.Frame):
     def btn_red_toy_acquisition_act(self):
         if self.state.red_toy_acquisition == False:
             self.red_points = self.red_points+5
-            self.update_points()
             self.btn_red_toy_acquisition['bg'] = "#00FF00"
             self.state.red_toy_acquisition = True
             self.writeToLog("赤チーム：おもちゃ取得\t+5点")
         else:
             self.red_points = self.red_points-5
-            self.update_points()
             self.btn_red_toy_acquisition['bg'] = "#FFFFFF"
             self.state.red_toy_acquisition = False
             self.writeToLog("赤チーム：おもちゃ取得取り消し\t-5点")
+        self.update_points()
 
     def btn_blue_toy_acquisition_act(self):
         if self.state.blue_toy_acquisition == False:
-            self.blue_points = self.blue_points+5
-            self.update_points()
+            self.blue_points += 5
             self.btn_blue_toy_acquisition['bg'] = "#00FF00"
             self.state.blue_toy_acquisition = True
             self.writeToLog("青チーム：おもちゃ取得\t+5点")
         else:
-            self.blue_points = self.blue_points-5
-            self.update_points()
+            self.blue_points -= 5
             self.btn_blue_toy_acquisition['bg'] = "#FFFFFF"
             self.state.blue_toy_acquisition = False
             self.writeToLog("青チーム：おもちゃ取得取り消し\t-5点")
+        self.update_points()
 
     def btn_red_byshelves_act(self, type, id):
         if self.position_state_red["back_yard"]["shelves"][type][id] == False:
@@ -647,7 +780,6 @@ class Application(tk.Frame):
                     self.writeToLog("赤チーム：バックヤード\t剣　配置\t+5点")
                 else:
                     self.writeToLog("赤チーム：バックヤード\t剣　配置")
-            self.update_points()
             self.position_state_red["back_yard"]["shelves"][type][id] = True
         else:
             if type == "hat":
@@ -667,8 +799,8 @@ class Application(tk.Frame):
                     self.writeToLog("赤チーム：バックヤード\t剣　配置取り消し\t-5点")
                 else:
                     self.writeToLog("赤チーム：バックヤード\t剣　配置取り消し")
-            self.update_points()
             self.position_state_red["back_yard"]["shelves"][type][id] = False
+        self.update_points()
 
     def btn_blue_byshelves_act(self, type, id):
         if self.position_state_blue["back_yard"]["shelves"][type][id] == False:
@@ -689,7 +821,6 @@ class Application(tk.Frame):
                     self.writeToLog("青チーム：バックヤード\t剣　配置\t+5点")
                 else:
                     self.writeToLog("青チーム：バックヤード\t剣　配置")
-            self.update_points()
             self.position_state_blue["back_yard"]["shelves"][type][id] = True
         else:
             if type == "hat":
@@ -709,8 +840,8 @@ class Application(tk.Frame):
                     self.writeToLog("青チーム：バックヤード\t剣　配置取り消し\t-5点")
                 else:
                     self.writeToLog("青チーム：バックヤード\t剣　配置取り消し")
-            self.update_points()
             self.position_state_blue["back_yard"]["shelves"][type][id] = False
+        self.update_points()
 
     def btn_red_sashelves_act(self, type, id):
         if self.position_state_red["sales_floor"]["shelves"][type][id] == False:
@@ -731,7 +862,6 @@ class Application(tk.Frame):
                     self.writeToLog("赤チーム：売り場\t剣　配置\t+15点")
                 else:
                     self.writeToLog("赤チーム：売り場\t剣　配置")
-            self.update_points()
             self.position_state_red["sales_floor"]["shelves"][type][id] = True
         else:
             if type == "hat":
@@ -751,8 +881,8 @@ class Application(tk.Frame):
                     self.writeToLog("赤チーム：売り場\t剣　配置取り消し\t-15点")
                 else:
                     self.writeToLog("赤チーム：売り場\t剣　配置取り消し")
-            self.update_points()
             self.position_state_red["sales_floor"]["shelves"][type][id] = False
+        self.update_points()
 
     def btn_blue_sashelves_act(self, type, id):
         if self.position_state_blue["sales_floor"]["shelves"][type][id] == False:
@@ -773,7 +903,6 @@ class Application(tk.Frame):
                     self.writeToLog("青チーム：売り場\t剣　配置\t+15点")
                 else:
                     self.writeToLog("青チーム：売り場\t剣　配置")
-            self.update_points()
             self.position_state_blue["sales_floor"]["shelves"][type][id] = True
         else:
             if type == "hat":
@@ -793,8 +922,8 @@ class Application(tk.Frame):
                     self.writeToLog("青チーム：売り場\t剣　配置取り消し\t+15点")
                 else:
                     self.writeToLog("青チーム：売り場\t剣　配置取り消し")
-            self.update_points()
             self.position_state_blue["sales_floor"]["shelves"][type][id] = False
+        self.update_points()
 
     def btn_red_shshelves_act(self, type, id):
         if self.position_state_red["showcase"]["shelves"][type][id] == False:
@@ -815,7 +944,6 @@ class Application(tk.Frame):
                     self.writeToLog("赤チーム：ショーケース\t剣　配置\t+25点")
                 else:
                     self.writeToLog("赤チーム：ショーケース\t剣　配置")
-            self.update_points()
             self.position_state_red["showcase"]["shelves"][type][id] = True
         else:
             if type == "hat":
@@ -835,8 +963,8 @@ class Application(tk.Frame):
                     self.writeToLog("赤チーム：ショーケース\t剣　配置取り消し\t-25点")
                 else:
                     self.writeToLog("赤チーム：ショーケース\t剣　配置取り消し")
-            self.update_points()
             self.position_state_red["showcase"]["shelves"][type][id] = False
+        self.update_points()
 
     def btn_blue_shshelves_act(self, type, id):
         if self.position_state_blue["showcase"]["shelves"][type][id] == False:
@@ -857,7 +985,6 @@ class Application(tk.Frame):
                     self.writeToLog("青チーム：ショーケース\t剣　配置\t+25点")
                 else:
                     self.writeToLog("青チーム：ショーケース\t剣　配置")
-            self.update_points()
             self.position_state_blue["showcase"]["shelves"][type][id] = True
         else:
             if type == "hat":
@@ -877,8 +1004,8 @@ class Application(tk.Frame):
                     self.writeToLog("青チーム：ショーケース\t剣　配置取り消し\t-25点")
                 else:
                     self.writeToLog("青チーム：ショーケース\t剣　配置取り消し")
-            self.update_points()
             self.position_state_blue["showcase"]["shelves"][type][id] = False
+        self.update_points()
 
     def btn_reset(self):
         self.red_points = 0
