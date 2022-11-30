@@ -41,6 +41,10 @@ class Application(tk.Frame):
             ".\sound\count_down.mp3")
         end = pygame.mixer.Sound(".\sound\end.mp3")
 
+    class Timer:
+        def init():
+            print("hoge")
+
     red_points = 0
     blue_points = 0
 
@@ -201,10 +205,16 @@ class Application(tk.Frame):
             self.master, textvariable=self.timer_colon_txt, font=timer_font, anchor=tk.CENTER)
         self.timer_sec_label = tk.Label(
             self.master, textvariable=self.timer_sec_txt, font=timer_font, anchor=tk.CENTER)
+
+        self.btn_shelves_x_pos = [70, 400, 300,
+                                  350, 260, 170, 80, 400, 300, 120, 40]
+        self.btn_shelves_y_pos = [872, 938, 730, 635, 550, 418, 262]
+
         self.timer_set_state_txt()
         self.timer_set_sec()
 
         self.def_btns_field_display_time()
+        self.def_btns_field_setting_time2()
         self.def_btns_field_sales_time()
         self.setup_timer_btn()
         self.setup_cmd_btn()
@@ -457,94 +467,77 @@ class Application(tk.Frame):
         self.btn_blue_toy_acquisition.place(
             x=self.canvas_width/2+btn_toy_acquisition_pos+self.field_center_shift, y=self.canvas_height*0.63, anchor=tk.CENTER)
 
-        btn_byshelves_0_pos = 70
         self.btn_red_byshelves_hat[0].place(
-            x=self.canvas_width/2-btn_byshelves_0_pos+self.field_center_shift, y=self.canvas_height*0.825, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.canvas_height*0.825, anchor=tk.CENTER)
         self.btn_red_byshelves_sword[0].place(
-            x=self.canvas_width/2-btn_byshelves_0_pos+self.field_center_shift, y=self.canvas_height*0.89, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.canvas_height*0.89, anchor=tk.CENTER)
         self.btn_blue_byshelves_hat[0].place(
-            x=self.canvas_width/2+btn_byshelves_0_pos+self.field_center_shift, y=self.canvas_height*0.825, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.canvas_height*0.825, anchor=tk.CENTER)
         self.btn_blue_byshelves_sword[0].place(
-            x=self.canvas_width/2+btn_byshelves_0_pos+self.field_center_shift, y=self.canvas_height*0.89, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.canvas_height*0.89, anchor=tk.CENTER)
 
-        btn_byshelves_1_pos = 400
         self.btn_red_byshelves_hat[1].place(
-            x=self.canvas_width/2-btn_byshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
-
-        btn_byshelves_2_pos = 300
+            x=self.canvas_width/2-self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
         self.btn_red_byshelves_sword[1].place(
-            x=self.canvas_width/2-btn_byshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
         self.btn_blue_byshelves_hat[1].place(
-            x=self.canvas_width/2+btn_byshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
         self.btn_blue_byshelves_sword[1].place(
-            x=self.canvas_width/2+btn_byshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.canvas_height*0.685, anchor=tk.CENTER)
 
         self.btn_red_byshelves_hat[2].place(
-            x=self.canvas_width/2-btn_byshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
         self.btn_red_byshelves_sword[2].place(
-            x=self.canvas_width/2-btn_byshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
         self.btn_blue_byshelves_hat[2].place(
-            x=self.canvas_width/2+btn_byshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
         self.btn_blue_byshelves_sword[2].place(
-            x=self.canvas_width/2+btn_byshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.canvas_height*0.6, anchor=tk.CENTER)
 
         self.btn_red_byshelves_hat[3].place(
-            x=self.canvas_width/2-btn_byshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.515, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
         self.btn_red_byshelves_sword[3].place(
-            x=self.canvas_width/2-btn_byshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.515, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
         self.btn_blue_byshelves_hat[3].place(
-            x=self.canvas_width/2+btn_byshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.515, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
         self.btn_blue_byshelves_sword[3].place(
-            x=self.canvas_width/2+btn_byshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.515, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
 
-        btn_sashelves_0_pos = 350
         self.btn_red_sashelves_hat[0].place(
-            x=self.canvas_width/2-btn_sashelves_0_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[3]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
         self.btn_blue_sashelves_hat[0].place(
-            x=self.canvas_width/2+btn_sashelves_0_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
-
-        btn_sashelves_1_pos = 260
+            x=self.canvas_width/2+self.btn_shelves_x_pos[3]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
         self.btn_red_sashelves_sword[0].place(
-            x=self.canvas_width/2-btn_sashelves_1_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[4]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
         self.btn_blue_sashelves_sword[0].place(
-            x=self.canvas_width/2+btn_sashelves_1_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[4]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
 
-        btn_sashelves_2_pos = 170
         self.btn_red_sashelves_hat[1].place(
-            x=self.canvas_width/2-btn_sashelves_2_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[5]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
         self.btn_blue_sashelves_hat[1].place(
-            x=self.canvas_width/2+btn_sashelves_2_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
-
-        btn_sashelves_3_pos = 80
+            x=self.canvas_width/2+self.btn_shelves_x_pos[5]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
         self.btn_red_sashelves_sword[1].place(
-            x=self.canvas_width/2-btn_sashelves_3_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[6]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
         self.btn_blue_sashelves_sword[1].place(
-            x=self.canvas_width/2+btn_sashelves_3_pos+self.field_center_shift, y=self.canvas_height*0.405, anchor=tk.CENTER)
-
-        btn_shshelves_0_pos = 400
+            x=self.canvas_width/2+self.btn_shelves_x_pos[6]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
 
         self.btn_red_shshelves_hat[0].place(
-            x=self.canvas_width/2-btn_shshelves_0_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[7]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
         self.btn_blue_shshelves_hat[0].place(
-            x=self.canvas_width/2+btn_shshelves_0_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
-
-        btn_shshelves_1_pos = 300
+            x=self.canvas_width/2+self.btn_shelves_x_pos[7]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
         self.btn_red_shshelves_sword[0].place(
-            x=self.canvas_width/2-btn_shshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[8]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
         self.btn_blue_shshelves_sword[0].place(
-            x=self.canvas_width/2+btn_shshelves_1_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[8]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
 
-        btn_shshelves_2_pos = 120
         self.btn_red_shshelves_hat[1].place(
-            x=self.canvas_width/2-btn_shshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[9]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
         self.btn_blue_shshelves_hat[1].place(
-            x=self.canvas_width/2+btn_shshelves_2_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
-
-        btn_shshelves_3_pos = 40
+            x=self.canvas_width/2+self.btn_shelves_x_pos[9]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
         self.btn_red_shshelves_sword[1].place(
-            x=self.canvas_width/2-btn_shshelves_3_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
+            x=self.canvas_width/2-self.btn_shelves_x_pos[10]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
         self.btn_blue_shshelves_sword[1].place(
-            x=self.canvas_width/2+btn_shshelves_3_pos+self.field_center_shift, y=self.canvas_height*0.26, anchor=tk.CENTER)
+            x=self.canvas_width/2+self.btn_shelves_x_pos[10]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
 
         self.btn_exist = True
 
@@ -566,6 +559,172 @@ class Application(tk.Frame):
             self.btn_blue_shshelves_hat[i].place_forget()
             self.btn_red_shshelves_sword[i].place_forget()
             self.btn_blue_shshelves_sword[i].place_forget()
+
+    # TODO:セッティングタイムのボタン配置
+    def def_btns_field_setting_time2(self):
+        self.st2btn_red_shelves_hat = []
+        self.st2btn_red_shelves_sword = []
+
+        self.st2btn_blue_shelves_hat = []
+        self.st2btn_blue_shelves_sword = []
+
+        btn_toy_acquisition_font = tk_font.Font(
+            self.master, family="HGPゴシックE", size=14, weight="bold")
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_red_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_hat.append(tk.Button(
+            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+        self.st2btn_blue_shelves_sword.append(tk.Button(
+            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+
+    def show_btns_field_setting_time2(self):
+        self.st2btn_red_shelves_hat[0].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.btn_shelves_y_pos[0], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[0].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.btn_shelves_y_pos[1], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[0].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.btn_shelves_y_pos[0], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[0].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[0]+self.field_center_shift, y=self.btn_shelves_y_pos[1], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[1].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[2], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[1].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[2], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[1].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[2], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[1].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[2], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[2].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[3], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[2].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[3], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[2].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[3], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[2].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[3], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[3].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[3].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[3].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[1]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[3].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[2]+self.field_center_shift, y=self.btn_shelves_y_pos[4], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[4].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[3]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[4].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[3]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[4].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[4]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[4].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[4]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[5].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[5]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[5].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[5]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[5].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[6]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[5].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[6]+self.field_center_shift, y=self.btn_shelves_y_pos[5], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[6].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[7]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[6].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[7]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[6].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[8]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[6].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[8]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+
+        self.st2btn_red_shelves_hat[7].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[9]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_hat[7].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[9]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+        self.st2btn_red_shelves_sword[7].place(
+            x=self.canvas_width/2-self.btn_shelves_x_pos[10]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+        self.st2btn_blue_shelves_sword[7].place(
+            x=self.canvas_width/2+self.btn_shelves_x_pos[10]+self.field_center_shift, y=self.btn_shelves_y_pos[6], anchor=tk.CENTER)
+
+    def hide_btns_field_setting_time2(self):
+        for i in range(len(self.st2btn_red_shelves_sword)):
+            self.st2btn_red_shelves_hat[i].place_forget()
+            self.st2btn_blue_shelves_hat[i].place_forget()
+            self.st2btn_red_shelves_sword[i].place_forget()
+            self.st2btn_blue_shelves_sword[i].place_forget()
+
+    def st2btn_red_shelves_act(self, type, num):
+        if type == "hat":
+            self.st2btn_red_shelves_hat[num]["bg"] = "#00FF00"
+        elif type == "hat":
+            self.st2btn_red_shelves_sword[num]["bg"] = "#00FF00"
+
+    def st2btn_blue_shelves_act(self, type, num):
+        print(type)
 
     def def_btns_field_sales_time(self):
         print("販売タイム")  # TODO:販売タイムのボタンを定義する
@@ -678,12 +837,13 @@ class Application(tk.Frame):
                 self.btn_setting_time1['bg'] = "#00FF00"
                 self.writeToLog("試合進行：セッティングタイム1　が選択されました。")
                 self.hide_btns_field_sales_time()
+                self.hide_btns_field_setting_time2()
                 self.show_btns_field_display_time()
             elif mode == self.time_mode.setting2:
                 self.btn_setting_time2['bg'] = "#00FF00"
                 self.writeToLog("試合進行：セッティングタイム2　が選択されました。")
                 self.hide_btns_field_display_time()
-                self.show_btns_field_sales_time()
+                self.show_btns_field_setting_time2()
             elif mode == self.time_mode.display_time:
                 self.btn_display_time['bg'] = "#00FF00"
                 self.writeToLog("試合進行：陳列タイム　が選択されました。")
