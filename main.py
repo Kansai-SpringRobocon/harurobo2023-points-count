@@ -9,6 +9,7 @@ import json
 import datetime
 from enum import Enum
 import pygame
+from enum import IntEnum
 
 
 class Application(tk.Frame):
@@ -27,10 +28,14 @@ class Application(tk.Frame):
         count_down_to_run = 4
         count_down = 5
 
-    class field_color(Enum):
+    class field_color(IntEnum):
         red = 0
         blue = 1
         NONE = 99
+
+    class object(IntEnum):
+        hat = 0
+        sword = 1
 
     pygame.mixer.init(frequency=44100)    # 音声初期設定
 
@@ -40,10 +45,6 @@ class Application(tk.Frame):
         count_down = pygame.mixer.Sound(
             ".\sound\count_down.mp3")
         end = pygame.mixer.Sound(".\sound\end.mp3")
-
-    class Timer:
-        def init():
-            print("hoge")
 
     red_points = 0
     blue_points = 0
@@ -57,6 +58,11 @@ class Application(tk.Frame):
 
         red_sold_out = False
         blue_sold_out = False
+
+        red_hat_setting_time2_pos = [False]*7
+        red_sword_setting_time2_pos = [False]*7
+        blue_hat_setting_time2__pos = [False]*7
+        blue_sword_setting_time2__pos = [False]*7
 
     state_time_mode = time_mode.NONE
     state_timer_mode = timer_mode.stop
@@ -165,6 +171,8 @@ class Application(tk.Frame):
         blue_team_name_label.place(x=int(self.canvas_width/2+points_width/2+self.field_center_shift),
                                    y=50, anchor=tk.CENTER)
 
+        self.btn_font = tk_font.Font(
+            self.master, family="HGPゴシックE", size=14, weight="bold")
         combobox_font = tk_font.Font(self.master, family="HGPゴシックE",
                                      size=18, weight="bold")
         self.master.option_add("*TCombobox*Listbox.Font", combobox_font)
@@ -209,6 +217,7 @@ class Application(tk.Frame):
         self.btn_shelves_x_pos = [70, 400, 300,
                                   350, 260, 170, 80, 400, 300, 120, 40]
         self.btn_shelves_y_pos = [872, 938, 730, 635, 550, 418, 262]
+        self.btn_txt = ['ハット', '剣']
 
         self.timer_set_state_txt()
         self.timer_set_sec()
@@ -386,79 +395,77 @@ class Application(tk.Frame):
         self.btn_blue_shshelves_hat = []
         self.btn_blue_shshelves_sword = []
 
-        btn_toy_acquisition_font = tk_font.Font(
-            self.master, family="HGPゴシックE", size=14, weight="bold")
         self.btn_red_toy_acquisition = tk.Button(
-            self.master, text='ワーク\n取得', command=self.btn_red_toy_acquisition_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
+            self.master, text='ワーク\n取得', command=self.btn_red_toy_acquisition_act, bg="#FFFFFF", font=self.btn_font)
         self.btn_blue_toy_acquisition = tk.Button(
-            self.master, text='ワーク\n取得', command=self.btn_blue_toy_acquisition_act, bg="#FFFFFF", font=btn_toy_acquisition_font)
+            self.master, text='ワーク\n取得', command=self.btn_blue_toy_acquisition_act, bg="#FFFFFF", font=self.btn_font)
 
         self.btn_red_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_byshelves_act("hat", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_byshelves_act("sword", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_byshelves_act("hat", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_byshelves_act("sword", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_byshelves_act("hat", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_byshelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_byshelves_act("hat", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_byshelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_byshelves_act("hat", 2), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_byshelves_act("sword", 2), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_byshelves_act("hat", 2), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_byshelves_act("sword", 2), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_byshelves_act("hat", 3), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_byshelves_act("sword", 3), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_byshelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_byshelves_act("hat", 3), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_byshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_byshelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_byshelves_act("sword", 3), bg="#FFFFFF", font=self.btn_font))
 
         self.btn_red_sashelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_sashelves_act("hat", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_sashelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_sashelves_act("sword", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_sashelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_sashelves_act("hat", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_sashelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_sashelves_act("sword", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_sashelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_sashelves_act("hat", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_sashelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_sashelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_sashelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_sashelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_sashelves_act("hat", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_sashelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_sashelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_sashelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
 
         self.btn_red_shshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_shshelves_act("hat", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_shshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_shshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_shshelves_act("sword", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_shshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_shshelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_shshelves_act("hat", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_shshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_shshelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_shshelves_act("sword", 0), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_shshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_red_shshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_red_shshelves_act("hat", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_red_shshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_red_shshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_red_shshelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_shshelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.btn_blue_shshelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.btn_blue_shshelves_act("hat", 1), bg="#FFFFFF", font=self.btn_font))
         self.btn_blue_shshelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.btn_blue_shshelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_shshelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
 
     def show_btns_field_display_time(self):
         btn_toy_acquisition_pos = 70
@@ -568,74 +575,72 @@ class Application(tk.Frame):
         self.st2btn_blue_shelves_hat = []
         self.st2btn_blue_shelves_sword = []
 
-        btn_toy_acquisition_font = tk_font.Font(
-            self.master, family="HGPゴシックE", size=14, weight="bold")
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 0), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 0), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 0), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 0), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 0), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 1), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 1), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 1), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 1), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 1), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 2), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 2), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 2), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 2), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 2), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 3), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 3), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 3), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 3), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 3), bg="#FFFFFF", font=self.btn_font))
 
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 4), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 4), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 4), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 4), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 4), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 5), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 5), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 5), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 5), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 5), bg="#FFFFFF", font=self.btn_font))
 
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 6), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 6), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 6), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 6), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 6), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_red_shelves_act("hat", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_red_shelves_act(self.object.hat, 7), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_red_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_red_shelves_act("sword", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_red_shelves_act(self.object.sword, 7), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_hat.append(tk.Button(
-            self.master, text='ハット', command=lambda: self.st2btn_blue_shelves_act("hat", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.st2btn_blue_shelves_act(self.object.hat, 7), bg="#FFFFFF", font=self.btn_font))
         self.st2btn_blue_shelves_sword.append(tk.Button(
-            self.master, text='剣', command=lambda: self.st2btn_blue_shelves_act("sword", 7), bg="#FFFFFF", font=btn_toy_acquisition_font))
+            self.master, text=self.btn_txt[self.object.sword], command=lambda: self.st2btn_blue_shelves_act(self.object.sword, 7), bg="#FFFFFF", font=self.btn_font))
 
     def show_btns_field_setting_time2(self):
         self.st2btn_red_shelves_hat[0].place(
@@ -718,13 +723,34 @@ class Application(tk.Frame):
             self.st2btn_blue_shelves_sword[i].place_forget()
 
     def st2btn_red_shelves_act(self, type, num):
-        if type == "hat":
-            self.st2btn_red_shelves_hat[num]["bg"] = "#00FF00"
-        elif type == "hat":
-            self.st2btn_red_shelves_sword[num]["bg"] = "#00FF00"
+        if type == self.object.hat:
+            if self.state.red_hat_setting_time2_pos == False:
+                self.st2btn_red_shelves_hat[num]["bg"] = "#00FF00"
+            else:
+                self.st2btn_red_shelves_hat[num]["bg"] = "#FFFFFF"
+            self.state.red_hat_setting_time2_pos = not self.state.red_hat_setting_time2_pos
+
+        elif type == self.object.sword:
+            if self.state.red_sword_setting_time2_pos == False:
+                self.st2btn_red_shelves_sword[num]["bg"] = "#00FF00"
+            else:
+                self.st2btn_red_shelves_sword[num]["bg"] = "#FFFFFF"
+            self.state.red_sword_setting_time2_pos = not self.state.red_sword_setting_time2_pos
 
     def st2btn_blue_shelves_act(self, type, num):
-        print(type)
+        if type == self.object.hat:
+            if self.state.blue_hat_setting_time2_pos == False:
+                self.st2btn_blue_shelves_hat[num]["bg"] = "#00FF00"
+            else:
+                self.st2btn_blue_shelves_hat[num]["bg"] = "#FFFFFF"
+            self.state.blue_hat_setting_time2_pos = not self.state.blue_hat_setting_time2_pos
+
+        elif type == self.object.sword:
+            if self.state.blue_sword_setting_time2_pos == False:
+                self.st2btn_blue_shelves_sword[num]["bg"] = "#00FF00"
+            else:
+                self.st2btn_blue_shelves_sword[num]["bg"] = "#FFFFFF"
+            self.state.blue_sword_setting_time2_pos = not self.state.blue_sword_setting_time2_pos
 
     def def_btns_field_sales_time(self):
         print("販売タイム")  # TODO:販売タイムのボタンを定義する
@@ -734,6 +760,78 @@ class Application(tk.Frame):
             self.master, text='完売\n達成', command=lambda: self.btn_sold_out("red"), bg="#FFFFFF", font=btn_field_font)
         self.btn_blue_sold_out = tk.Button(
             self.master, text='完売\n達成', command=lambda: self.btn_sold_out("blue"), bg="#FFFFFF", font=btn_field_font)
+
+        self.btn_shelves_sales = [[[] for i in range(2)]for i in range(2)]
+
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 0), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 1), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 2), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 3), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 4), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 5), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 6), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.hat, 7), bg="#FFFFFF", font=self.btn_font))
+
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 0), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 1), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 2), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 3), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 4), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 5), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 6), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.red][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.red, self.object.sword, 7), bg="#FFFFFF", font=self.btn_font))
+
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 0), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 1), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 2), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 3), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 4), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 5), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 6), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.hat].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.hat, 7), bg="#FFFFFF", font=self.btn_font))
+
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 0), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 1), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 2), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 3), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 4), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 5), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 6), bg="#FFFFFF", font=self.btn_font))
+        self.btn_shelves_sales[self.field_color.blue][self.object.sword].append(tk.Button(
+            self.master, text=self.btn_txt[self.object.hat], command=lambda: self.sales_btn_shelves_act(self.field_color.blue, self.object.sword, 7), bg="#FFFFFF", font=self.btn_font))
+
+        print(self.btn_shelves_sales)
 
     def show_btns_field_sales_time(self):
         # TODO:販売タイムのボタン表示を実装する
@@ -809,6 +907,9 @@ class Application(tk.Frame):
 
         self.update_points()
 
+    def sales_btn_shelves_act(self, color, type, id):  # TODO:販売タイムのボタン押されたときの挙動を書く
+        print(color)
+
     def set_mode_timer(self, mode):
         if self.state_time_mode == mode:
             if mode == self.time_mode.setting1:
@@ -843,13 +944,20 @@ class Application(tk.Frame):
                 self.btn_setting_time2['bg'] = "#00FF00"
                 self.writeToLog("試合進行：セッティングタイム2　が選択されました。")
                 self.hide_btns_field_display_time()
+                self.hide_btns_field_sales_time()
                 self.show_btns_field_setting_time2()
             elif mode == self.time_mode.display_time:
                 self.btn_display_time['bg'] = "#00FF00"
                 self.writeToLog("試合進行：陳列タイム　が選択されました。")
+                self.hide_btns_field_sales_time()
+                self.hide_btns_field_setting_time2()
+                self.show_btns_field_display_time()
             elif mode == self.time_mode.sales_time:
                 self.btn_sales_time['bg'] = "#00FF00"
                 self.writeToLog("試合進行：販売タイム　が選択されました。")
+                self.hide_btns_field_setting_time2()
+                self.hide_btns_field_display_time()
+                self.show_btns_field_sales_time()
 
             self.state_time_mode = mode
             self.timer_reset()
@@ -899,27 +1007,25 @@ class Application(tk.Frame):
         if self.state.red_toy_acquisition == False:
             self.red_points = self.red_points+5
             self.btn_red_toy_acquisition['bg'] = "#00FF00"
-            self.state.red_toy_acquisition = True
             self.writeToLog("赤チーム：おもちゃ取得\t+5点")
         else:
             self.red_points = self.red_points-5
             self.btn_red_toy_acquisition['bg'] = "#FFFFFF"
-            self.state.red_toy_acquisition = False
             self.writeToLog("赤チーム：おもちゃ取得取り消し\t-5点")
         self.update_points()
+        self.state.red_toy_acquisition = not self.state.red_toy_acquisition
 
     def btn_blue_toy_acquisition_act(self):
         if self.state.blue_toy_acquisition == False:
             self.blue_points += 5
             self.btn_blue_toy_acquisition['bg'] = "#00FF00"
-            self.state.blue_toy_acquisition = True
             self.writeToLog("青チーム：おもちゃ取得\t+5点")
         else:
             self.blue_points -= 5
             self.btn_blue_toy_acquisition['bg'] = "#FFFFFF"
-            self.state.blue_toy_acquisition = False
             self.writeToLog("青チーム：おもちゃ取得取り消し\t-5点")
         self.update_points()
+        self.state.blue_toy_acquisition = not self.state.blue_toy_acquisition
 
     def btn_red_byshelves_act(self, type, id):
         if self.position_state_red["back_yard"]["shelves"][type][id] == False:
@@ -1199,6 +1305,9 @@ class Application(tk.Frame):
             self.btn_red_shshelves_sword[i]['bg'] = "#FFFFFF"
 
         self.hide_btns_field_display_time()  # フィールド上のボタンを非表示
+        self.hide_btns_field_sales_time()
+        self.hide_btns_field_setting_time2()
+
         self.update_points()
         self.writeToLog("リセットしました")
 
