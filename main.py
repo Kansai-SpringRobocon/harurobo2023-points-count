@@ -1,3 +1,11 @@
+#
+# harurobo2023-points-count/main.py
+#
+# (c) 2022 関西春ロボコン運営委員会 / Haru Robocon in Kansai
+#
+# This software is released under the MIT License.
+# http://opensource.org/licenses/mit-license.php
+#
 #!/usr/bin/env python
 # coding: utf-8
 
