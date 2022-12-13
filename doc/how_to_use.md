@@ -78,6 +78,13 @@ main.exe # 動作ファイル
 6. [販売タイム](https://github.com/Kansai-SpringRobocon/harurobo2023-points-count/blob/master/doc/how_to_use.md#販売タイム)
 7. （2. へ戻る）
 
+### 注意
+
+アプリケーション起動時にWindows Defenderによって、下記画像の様なエラーが出る場合がある。「詳細情報」->「実行」と選択することで実行できる。
+
+![WindowsDefender1](/doc/img/windows_defender.png)
+![WindowsDefender2](/doc/img/windows_defender2.png)
+
 ## アプリケーション操作
 
 「`リセット`」ボタンを押すと、すべての状態がリセットされる。（ボタンの選択色が緑色→白色に、得点0点に）
