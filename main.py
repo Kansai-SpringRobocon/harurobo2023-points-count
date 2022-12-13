@@ -894,7 +894,7 @@ class Application(tk.Frame):
             for object_type in range(2):
                 for num in range(7):
                     if self.state.shelves_setting_time2[num][color][object_type] == True:
-                        self.max_collection_room_num[color] += 1
+                        self.max_collection_room_num[color] = + 1
 
     def hide_btns_field_sales_time(self):
         for i in range(2):  # field_color
