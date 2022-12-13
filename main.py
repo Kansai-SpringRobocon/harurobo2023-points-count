@@ -255,6 +255,13 @@ class Application(tk.Frame):
         self.master.mainloop()
 
     def setup_timer_btn(self):
+        """
+        タイマー操作エリアボタン定義・配置
+
+        Parameters
+        ----------
+
+        """
         self.canvas.create_line(1494, 170, 1792, 170, fill="#696969", width=5)
         btn_timer_label_font = tk_font.Font(
             self.master, family="HGPゴシックE", size=24, weight="bold")
@@ -274,6 +281,13 @@ class Application(tk.Frame):
         self.btn_timer_reset.place(x=1650, y=260)
 
     def timer_start(self):
+        """
+        タイマー開始動作
+
+        Parameters
+        ----------
+
+        """
         self.btn_timer_pause.place(x=1510, y=260)
         self.btn_timer_start.place_forget()
         self.state_timer_mode = self.timer_mode.count_down
@@ -282,6 +296,13 @@ class Application(tk.Frame):
         self.timer()
 
     def timer_pause(self):
+        """
+        タイマー一時停止動作
+
+        Parameters
+        ----------
+
+        """
         self.btn_timer_start.place(x=1530, y=260)
         self.btn_timer_pause.place_forget()
         self.state_timer_mode = self.timer_mode.pause
@@ -320,6 +341,13 @@ class Application(tk.Frame):
         self.timer_show()
 
     def timer_reset(self):
+        """
+        タイマーリセット動作
+
+        Parameters
+        ----------
+
+        """
         self.timer_set_sec()
         self.state_timer_mode = self.timer_mode.stop
         self.timer_set_state_txt()
@@ -359,6 +387,13 @@ class Application(tk.Frame):
                 self.master.after(1000, self.timer)
 
     def timer_show(self):
+        """
+        タイマー表示動作
+
+        Parameters
+        ----------
+
+        """
         if self.timer_sec < 60:
             self.timer_sec_txt.set(str(self.timer_sec).zfill(2))
             self.timer_min_txt.set("00")
@@ -367,6 +402,13 @@ class Application(tk.Frame):
             self.timer_sec_txt.set(str(self.timer_sec % 60).zfill(2))
 
     def setup_cmd_btn(self):
+        """
+        試合進行操作エリアボタン定義・配置
+
+        Parameters
+        ----------
+
+        """
         btn_cmd_x = 1643
 
         btn_rst_font = tk_font.Font(
@@ -409,6 +451,13 @@ class Application(tk.Frame):
 
     # 陳列タイムのボタン設定
     def def_btns_field_display_time(self):
+        """
+        「陳列タイム」フィールド状態操作エリアボタン定義
+
+        Parameters
+        ----------
+
+        """
         self.btn_red_shelves_hat = []
         self.btn_red_shelves_sword = []
 
@@ -500,6 +549,13 @@ class Application(tk.Frame):
             self.master, text=self.btn_txt[self.object.sword], command=lambda: self.btn_blue_shshelves_act("sword", 1), bg="#FFFFFF", font=self.btn_font))
 
     def show_btns_field_display_time(self):
+        """
+        「陳列タイム」フィールド状態操作エリアボタン表示
+
+        Parameters
+        ----------
+
+        """
         btn_toy_acquisition_pos = 70
         self.btn_red_toy_acquisition.place(
             x=self.canvas_width/2-btn_toy_acquisition_pos+self.field_center_shift, y=self.canvas_height*0.63, anchor=tk.CENTER)
@@ -581,6 +637,13 @@ class Application(tk.Frame):
         self.btn_exist = True
 
     def hide_btns_field_display_time(self):
+        """
+        「陳列タイム」フィールド状態操作エリアボタン非表示
+
+        Parameters
+        ----------
+
+        """
         self.btn_red_toy_acquisition.place_forget()
         self.btn_blue_toy_acquisition.place_forget()
         for i in range(len(self.position_state_red["back_yard"]["shelves"]["hat"])):
@@ -600,6 +663,13 @@ class Application(tk.Frame):
             self.btn_blue_shshelves_sword[i].place_forget()
 
     def reset_btns_field_display_time(self):
+        """
+        「陳列タイム」フィールド状態操作エリアボタンリセット
+
+        Parameters
+        ----------
+
+        """
         self.btn_red_toy_acquisition["bg"] = "#FFFFFF"
         self.state.red_toy_acquisition = False
         self.btn_blue_toy_acquisition["bg"] = "#FFFFFF"
@@ -634,6 +704,13 @@ class Application(tk.Frame):
             self.position_state_blue["showcase"]["shelves"]["sword"][i] = False
 
     def def_btns_field_setting_time2(self):
+        """
+        「セッティングタイム2」フィールド状態操作エリアボタン定義
+
+        Parameters
+        ----------
+
+        """
         self.st2btn_red_shelves_hat = []
         self.st2btn_red_shelves_sword = []
 

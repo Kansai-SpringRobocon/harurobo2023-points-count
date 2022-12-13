@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>春ロボコン2023 得点計算ツール v0.0.1 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> 春ロボコン2023 得点計算ツール
+          </a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-main">main module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">春ロボコン2023 得点計算ツール</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">春ロボコン2023 得点計算ツール v0.0.1 ドキュメント</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-2023-s-documentation">
+<h1>Welcome to 春ロボコン2023 得点計算ツール's documentation!<a class="headerlink" href="#welcome-to-2023-s-documentation" title="この見出しへのパーマリンク"></a></h1>
+<div class="toctree-wrapper compound">
+<span id="document-main"></span><section id="module-main">
+<span id="main-module"></span><h2>main module<a class="headerlink" href="#module-main" title="この見出しへのパーマリンク"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Application</span></span><a class="headerlink" href="#main.Application" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.area_state">
+<span class="sig-name descname"><span class="pre">area_state</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">&lt;_io.TextIOWrapper</span> <span class="pre">name='./setting/area_state.json'</span> <span class="pre">mode='r'</span> <span class="pre">encoding='utf-8'&gt;</span></em><a class="headerlink" href="#main.Application.area_state" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.blue_points">
+<span class="sig-name descname"><span class="pre">blue_points</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.blue_points" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.blue_team_name">
+<span class="sig-name descname"><span class="pre">blue_team_name</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">'チーム名を\n選択してください'</span></em><a class="headerlink" href="#main.Application.blue_team_name" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.blue_toy_counters">
+<span class="sig-name descname"><span class="pre">blue_toy_counters</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.blue_toy_counters" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_blue_byshelves_act">
+<span class="sig-name descname"><span class="pre">btn_blue_byshelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_blue_byshelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_blue_sashelves_act">
+<span class="sig-name descname"><span class="pre">btn_blue_sashelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_blue_sashelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_blue_shshelves_act">
+<span class="sig-name descname"><span class="pre">btn_blue_shshelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_blue_shshelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_blue_toy_acquisition_act">
+<span class="sig-name descname"><span class="pre">btn_blue_toy_acquisition_act</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_blue_toy_acquisition_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_close">
+<span class="sig-name descname"><span class="pre">btn_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_close" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_count_sales_act">
+<span class="sig-name descname"><span class="pre">btn_count_sales_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_count_sales_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_count_st2_act">
+<span class="sig-name descname"><span class="pre">btn_count_st2_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_count_st2_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.btn_exist">
+<span class="sig-name descname"><span class="pre">btn_exist</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">False</span></em><a class="headerlink" href="#main.Application.btn_exist" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_red_byshelves_act">
+<span class="sig-name descname"><span class="pre">btn_red_byshelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_red_byshelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_red_sashelves_act">
+<span class="sig-name descname"><span class="pre">btn_red_sashelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_red_sashelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_red_shshelves_act">
+<span class="sig-name descname"><span class="pre">btn_red_shshelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_red_shshelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_red_toy_acquisition_act">
+<span class="sig-name descname"><span class="pre">btn_red_toy_acquisition_act</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_red_toy_acquisition_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_reset">
+<span class="sig-name descname"><span class="pre">btn_reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_reset" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.btn_sold_out_act">
+<span class="sig-name descname"><span class="pre">btn_sold_out_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.btn_sold_out_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.cal_max_collection_room_num">
+<span class="sig-name descname"><span class="pre">cal_max_collection_room_num</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.cal_max_collection_room_num" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.check_end_display_time">
+<span class="sig-name descname"><span class="pre">check_end_display_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.check_end_display_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.def_btns_field_display_time">
+<span class="sig-name descname"><span class="pre">def_btns_field_display_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.def_btns_field_display_time" title="この定義へのパーマリンク"></a></dt>
+<dd><p>「陳列タイム」フィールド状態操作エリアボタン定義</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.def_btns_field_sales_time">
+<span class="sig-name descname"><span class="pre">def_btns_field_sales_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.def_btns_field_sales_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.def_btns_field_setting_time2">
+<span class="sig-name descname"><span class="pre">def_btns_field_setting_time2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.def_btns_field_setting_time2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application.field_color">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-name descname"><span class="pre">field_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.field_color" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.field_color.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">99</span></em><a class="headerlink" href="#main.Application.field_color.NONE" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.field_color.blue">
+<span class="sig-name descname"><span class="pre">blue</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">1</span></em><a class="headerlink" href="#main.Application.field_color.blue" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.field_color.red">
+<span class="sig-name descname"><span class="pre">red</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.field_color.red" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.hide_btns_field_display_time">
+<span class="sig-name descname"><span class="pre">hide_btns_field_display_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.hide_btns_field_display_time" title="この定義へのパーマリンク"></a></dt>
+<dd><p>「陳列タイム」フィールド状態操作エリアボタン非表示</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.hide_btns_field_sales_time">
+<span class="sig-name descname"><span class="pre">hide_btns_field_sales_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.hide_btns_field_sales_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.hide_btns_field_setting_time2">
+<span class="sig-name descname"><span class="pre">hide_btns_field_setting_time2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.hide_btns_field_setting_time2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application.object">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-name descname"><span class="pre">object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.object" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.object.hat">
+<span class="sig-name descname"><span class="pre">hat</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.object.hat" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.object.sword">
+<span class="sig-name descname"><span class="pre">sword</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">1</span></em><a class="headerlink" href="#main.Application.object.sword" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.position_state_blue">
+<span class="sig-name descname"><span class="pre">position_state_blue</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">{'back_yard':</span> <span class="pre">{'shelves':</span> <span class="pre">{'hat':</span> <span class="pre">[False,</span> <span class="pre">False,</span> <span class="pre">False,</span> <span class="pre">False],</span> <span class="pre">'sword':</span> <span class="pre">[False,</span> <span class="pre">False,</span> <span class="pre">False,</span> <span class="pre">False]}},</span> <span class="pre">'sales_floor':</span> <span class="pre">{'shelves':</span> <span class="pre">{'hat':</span> <span class="pre">[False,</span> <span class="pre">False],</span> <span class="pre">'sword':</span> <span class="pre">[False,</span> <span class="pre">False]}},</span> <span class="pre">'showcase':</span> <span class="pre">{'shelves':</span> <span class="pre">{'hat':</span> <span class="pre">[False,</span> <span class="pre">False],</span> <span class="pre">'sword':</span> <span class="pre">[False,</span> <span class="pre">False]}}}</span></em><a class="headerlink" href="#main.Application.position_state_blue" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.position_state_red">
+<span class="sig-name descname"><span class="pre">position_state_red</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">{'back_yard':</span> <span class="pre">{'shelves':</span> <span class="pre">{'hat':</span> <span class="pre">[False,</span> <span class="pre">False,</span> <span class="pre">False,</span> <span class="pre">False],</span> <span class="pre">'sword':</span> <span class="pre">[False,</span> <span class="pre">False,</span> <span class="pre">False,</span> <span class="pre">False]}},</span> <span class="pre">'sales_floor':</span> <span class="pre">{'shelves':</span> <span class="pre">{'hat':</span> <span class="pre">[False,</span> <span class="pre">False],</span> <span class="pre">'sword':</span> <span class="pre">[False,</span> <span class="pre">False]}},</span> <span class="pre">'showcase':</span> <span class="pre">{'shelves':</span> <span class="pre">{'hat':</span> <span class="pre">[False,</span> <span class="pre">False],</span> <span class="pre">'sword':</span> <span class="pre">[False,</span> <span class="pre">False]}}}</span></em><a class="headerlink" href="#main.Application.position_state_red" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.red_points">
+<span class="sig-name descname"><span class="pre">red_points</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.red_points" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.red_team_name">
+<span class="sig-name descname"><span class="pre">red_team_name</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">'チーム名を\n選択してください'</span></em><a class="headerlink" href="#main.Application.red_team_name" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.red_toy_counters">
+<span class="sig-name descname"><span class="pre">red_toy_counters</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.red_toy_counters" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.reset_btns_field_display_time">
+<span class="sig-name descname"><span class="pre">reset_btns_field_display_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.reset_btns_field_display_time" title="この定義へのパーマリンク"></a></dt>
+<dd><p>「陳列タイム」フィールド状態操作エリアボタンリセット</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.reset_btns_field_sales_time">
+<span class="sig-name descname"><span class="pre">reset_btns_field_sales_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.reset_btns_field_sales_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.reset_btns_field_setting_time2">
+<span class="sig-name descname"><span class="pre">reset_btns_field_setting_time2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.reset_btns_field_setting_time2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.set_mode_timer">
+<span class="sig-name descname"><span class="pre">set_mode_timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.set_mode_timer" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.setup_cmd_btn">
+<span class="sig-name descname"><span class="pre">setup_cmd_btn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.setup_cmd_btn" title="この定義へのパーマリンク"></a></dt>
+<dd><p>試合進行操作エリアボタン定義・配置</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.setup_sales_time">
+<span class="sig-name descname"><span class="pre">setup_sales_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.setup_sales_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.setup_timer_btn">
+<span class="sig-name descname"><span class="pre">setup_timer_btn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.setup_timer_btn" title="この定義へのパーマリンク"></a></dt>
+<dd><p>タイマー操作エリアボタン定義・配置</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.show_btns_field_display_time">
+<span class="sig-name descname"><span class="pre">show_btns_field_display_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.show_btns_field_display_time" title="この定義へのパーマリンク"></a></dt>
+<dd><p>「陳列タイム」フィールド状態操作エリアボタン表示</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.show_btns_field_sales_time">
+<span class="sig-name descname"><span class="pre">show_btns_field_sales_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.show_btns_field_sales_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.show_btns_field_setting_time2">
+<span class="sig-name descname"><span class="pre">show_btns_field_setting_time2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.show_btns_field_setting_time2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application.sound">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-name descname"><span class="pre">sound</span></span><a class="headerlink" href="#main.Application.sound" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.sound.count_down">
+<span class="sig-name descname"><span class="pre">count_down</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">&lt;Sound</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#main.Application.sound.count_down" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.sound.end">
+<span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">&lt;Sound</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#main.Application.sound.end" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.sound.start">
+<span class="sig-name descname"><span class="pre">start</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">&lt;Sound</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#main.Application.sound.start" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.st2btn_blue_shelves_act">
+<span class="sig-name descname"><span class="pre">st2btn_blue_shelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.st2btn_blue_shelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.st2btn_red_shelves_act">
+<span class="sig-name descname"><span class="pre">st2btn_red_shelves_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.st2btn_red_shelves_act" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application.state">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-name descname"><span class="pre">state</span></span><a class="headerlink" href="#main.Application.state" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state.blue_sold_out">
+<span class="sig-name descname"><span class="pre">blue_sold_out</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">False</span></em><a class="headerlink" href="#main.Application.state.blue_sold_out" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state.blue_toy_acquisition">
+<span class="sig-name descname"><span class="pre">blue_toy_acquisition</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">False</span></em><a class="headerlink" href="#main.Application.state.blue_toy_acquisition" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state.red_sold_out">
+<span class="sig-name descname"><span class="pre">red_sold_out</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">False</span></em><a class="headerlink" href="#main.Application.state.red_sold_out" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state.red_toy_acquisition">
+<span class="sig-name descname"><span class="pre">red_toy_acquisition</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">False</span></em><a class="headerlink" href="#main.Application.state.red_toy_acquisition" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state.shelves_setting_time2">
+<span class="sig-name descname"><span class="pre">shelves_setting_time2</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">[[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]],</span> <span class="pre">[[False,</span> <span class="pre">False],</span> <span class="pre">[False,</span> <span class="pre">False]]]</span></em><a class="headerlink" href="#main.Application.state.shelves_setting_time2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state_first_end_display_time">
+<span class="sig-name descname"><span class="pre">state_first_end_display_time</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">99</span></em><a class="headerlink" href="#main.Application.state_first_end_display_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state_first_sold_out">
+<span class="sig-name descname"><span class="pre">state_first_sold_out</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">99</span></em><a class="headerlink" href="#main.Application.state_first_sold_out" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state_time_mode">
+<span class="sig-name descname"><span class="pre">state_time_mode</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">99</span></em><a class="headerlink" href="#main.Application.state_time_mode" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.state_timer_mode">
+<span class="sig-name descname"><span class="pre">state_timer_mode</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.state_timer_mode" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.team_list">
+<span class="sig-name descname"><span class="pre">team_list</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">{'team_name':</span> <span class="pre">['大阪大学\nRobohan',</span> <span class="pre">'香川高専高松\n高松玩具',</span> <span class="pre">'香川高専高松\nまごころ屋',</span> <span class="pre">'京都大学\n機械研究会',</span> <span class="pre">'京都工芸繊維大学\n新学期応援セール📢',</span> <span class="pre">'京都工芸繊維大学\nトイトイ',</span> <span class="pre">'富山大学\nToniRobo',</span> <span class="pre">'同志社大学\nDRC',</span> <span class="pre">'名古屋工業大学\nロボコン工房',</span> <span class="pre">'舞鶴高専\nChallen',</span> <span class="pre">'舞鶴高専\nゆーでぃー',</span> <span class="pre">'三重大学\nM³RC',</span> <span class="pre">'Scramble\nScramble</span> <span class="pre">Cube',</span> <span class="pre">'Scramble\nScramble</span> <span class="pre">Fly']}</span></em><a class="headerlink" href="#main.Application.team_list" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.team_list_file">
+<span class="sig-name descname"><span class="pre">team_list_file</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">&lt;_io.TextIOWrapper</span> <span class="pre">name='./setting/team.json'</span> <span class="pre">mode='r'</span> <span class="pre">encoding='utf-8'&gt;</span></em><a class="headerlink" href="#main.Application.team_list_file" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application.time_mode">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-name descname"><span class="pre">time_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.time_mode" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.time_mode.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">99</span></em><a class="headerlink" href="#main.Application.time_mode.NONE" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.time_mode.display_time">
+<span class="sig-name descname"><span class="pre">display_time</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">3</span></em><a class="headerlink" href="#main.Application.time_mode.display_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.time_mode.sales_time">
+<span class="sig-name descname"><span class="pre">sales_time</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">4</span></em><a class="headerlink" href="#main.Application.time_mode.sales_time" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.time_mode.setting1">
+<span class="sig-name descname"><span class="pre">setting1</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">1</span></em><a class="headerlink" href="#main.Application.time_mode.setting1" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.time_mode.setting2">
+<span class="sig-name descname"><span class="pre">setting2</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">2</span></em><a class="headerlink" href="#main.Application.time_mode.setting2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer">
+<span class="sig-name descname"><span class="pre">timer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Application.timer_mode">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-name descname"><span class="pre">timer_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_mode" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.timer_mode.count_down">
+<span class="sig-name descname"><span class="pre">count_down</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">5</span></em><a class="headerlink" href="#main.Application.timer_mode.count_down" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.timer_mode.count_down_to_run">
+<span class="sig-name descname"><span class="pre">count_down_to_run</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">4</span></em><a class="headerlink" href="#main.Application.timer_mode.count_down_to_run" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.timer_mode.end">
+<span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">3</span></em><a class="headerlink" href="#main.Application.timer_mode.end" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.timer_mode.pause">
+<span class="sig-name descname"><span class="pre">pause</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">2</span></em><a class="headerlink" href="#main.Application.timer_mode.pause" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.timer_mode.run">
+<span class="sig-name descname"><span class="pre">run</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">1</span></em><a class="headerlink" href="#main.Application.timer_mode.run" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main.Application.timer_mode.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><em class="property"><span class="w">  </span><span class="p"><span class="pre">=</span></span><span class="w">  </span><span class="pre">0</span></em><a class="headerlink" href="#main.Application.timer_mode.stop" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer_pause">
+<span class="sig-name descname"><span class="pre">timer_pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_pause" title="この定義へのパーマリンク"></a></dt>
+<dd><p>タイマー一時停止動作</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer_reset">
+<span class="sig-name descname"><span class="pre">timer_reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_reset" title="この定義へのパーマリンク"></a></dt>
+<dd><p>タイマーリセット動作</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer_set_sec">
+<span class="sig-name descname"><span class="pre">timer_set_sec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_set_sec" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer_set_state_txt">
+<span class="sig-name descname"><span class="pre">timer_set_state_txt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_set_state_txt" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer_show">
+<span class="sig-name descname"><span class="pre">timer_show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_show" title="この定義へのパーマリンク"></a></dt>
+<dd><p>タイマー表示動作</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.timer_start">
+<span class="sig-name descname"><span class="pre">timer_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.timer_start" title="この定義へのパーマリンク"></a></dt>
+<dd><p>タイマー開始動作</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.update_points">
+<span class="sig-name descname"><span class="pre">update_points</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.update_points" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.update_record_txt_sold_out">
+<span class="sig-name descname"><span class="pre">update_record_txt_sold_out</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.update_record_txt_sold_out" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.update_team_name">
+<span class="sig-name descname"><span class="pre">update_team_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.update_team_name" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Application.writeToLog">
+<span class="sig-name descname"><span class="pre">writeToLog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Application.writeToLog" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="この見出しへのパーマリンク"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">モジュール索引</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">検索ページ</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, 関西春ロボコン運営委員会.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
