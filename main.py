@@ -35,6 +35,7 @@ class Application(tk.Frame):
         end = 3
         count_down_to_run = 4
         count_down = 5
+        restart = 6
 
     class field_color(IntEnum):
         red = 0
@@ -260,36 +261,56 @@ class Application(tk.Frame):
             self.master, family="HGPゴシックE", size=24, weight="bold")
         cmd_btn_label = tk.Label(self.master, text='タイマー操作',
                                  font=btn_timer_label_font, anchor=tk.CENTER)
-        cmd_btn_label.place(x=1500, y=200)
+        cmd_btn_label.place(x=1500, y=180)
         btn_timer_font = tk_font.Font(
             self.master, family="HGPゴシックE", size=15, weight="bold")
         self.btn_timer_start = tk.Button(self.master, text='開始', command=self.timer_start,
                                          width=4, font=btn_timer_font, relief=tk.RAISED, bd=6, anchor=tk.CENTER, bg="#4169e1", fg="#FFFFFF")
-        self.btn_timer_start.place(x=1530, y=260)
+        self.btn_timer_start.place(x=1530, y=230)
         self.btn_timer_pause = tk.Button(self.master, text='一時停止', command=self.timer_pause,
                                          width=8, font=btn_timer_font, relief=tk.RAISED, bd=6, anchor=tk.CENTER, bg="#e0e041")
-        # btn_timer_pause.place(x=1510, y=260)
+        # btn_timer_pause.place(x=1510, y=230)
         self.btn_timer_reset = tk.Button(self.master, text='リセット', command=self.timer_reset,
                                          width=8, font=btn_timer_font, relief=tk.RAISED, bd=6, anchor=tk.CENTER, bg="#e04141", fg="#FFFFFF")
-        self.btn_timer_reset.place(x=1650, y=260)
+        self.btn_timer_reset.place(x=1650, y=230)
+        self.btn_timer_restart = tk.Button(self.master, text='再開', command=self.timer_restart,
+                                           width=8, font=btn_timer_font, relief=tk.RAISED, bd=6, anchor=tk.CENTER, bg="#3838ff", fg="#FFFFFF")
+        # self.btn_timer_restart.place(x=1650, y=230)
+        notes_timer_label_font = tk_font.Font(
+            self.master, family="HGPゴシックE", size=11, weight="bold")
+        notes_btn_label = tk.Label(self.master, text='※カウントダウン中に一時停止すると\n　バグるのでリセットすること',
+                                   font=notes_timer_label_font, anchor=tk.W)
+        notes_btn_label.place(x=1500, y=290)
 
     def timer_start(self):
-        self.btn_timer_pause.place(x=1510, y=260)
+        self.btn_timer_pause.place(x=1510, y=230)
         self.btn_timer_start.place_forget()
         self.state_timer_mode = self.timer_mode.count_down
         self.timer_sec = 5
         self.timer_set_state_txt()
         self.timer()
 
+    def timer_restart(self):
+        self.btn_timer_pause.place(x=1510, y=230)
+        self.btn_timer_restart.place_forget()
+        self.state_timer_mode = self.timer_mode.restart
+        self.timer_set_state_txt()
+        self.timer()
+
     def timer_pause(self):
-        self.btn_timer_start.place(x=1530, y=260)
+        self.btn_timer_restart.place(x=1510, y=230)
         self.btn_timer_pause.place_forget()
         self.state_timer_mode = self.timer_mode.pause
+        self.timer_set_state_txt()
 
     def timer_set_state_txt(self):
         self.timer_record_str = ""
         if self.state_timer_mode == self.timer_mode.count_down:
             self.timer_state_txt.set("Ready?")
+        elif self.state_timer_mode == self.timer_mode.pause:
+            self.timer_state_txt.set("一時停止中")
+        elif self.state_timer_mode == self.timer_mode.restart:
+            self.timer_state_txt.set("再開！")
         elif self.state_time_mode == self.time_mode.setting1:
             self.timer_state_txt.set("セッティングタイム1")
         elif self.state_time_mode == self.time_mode.setting2:
@@ -323,8 +344,9 @@ class Application(tk.Frame):
         self.timer_set_sec()
         self.state_timer_mode = self.timer_mode.stop
         self.timer_set_state_txt()
-        self.btn_timer_start.place(x=1530, y=260)
+        self.btn_timer_start.place(x=1530, y=230)
         self.btn_timer_pause.place_forget()
+        self.btn_timer_restart.place_forget()
 
     def timer(self):
         if self.state_timer_mode == self.timer_mode.count_down:
@@ -347,6 +369,7 @@ class Application(tk.Frame):
             self.timer_set_state_txt()
 
         if self.state_timer_mode == self.timer_mode.run:
+            self.timer_set_state_txt()
             if self.timer_sec == 0:
                 self.timer_sec_label.place_forget()
                 self.timer_min_label.place_forget()
@@ -357,6 +380,9 @@ class Application(tk.Frame):
                 self.timer_show()
                 self.timer_sec -= 1
                 self.master.after(1000, self.timer)
+        if self.state_timer_mode == self.timer_mode.restart:
+            self.state_timer_mode = self.timer_mode.run
+            self.master.after(1000, self.timer)
 
     def timer_show(self):
         if self.timer_sec < 60:
